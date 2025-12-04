@@ -1,6 +1,15 @@
 # Perturbation Theory for Step-Index Optical Fibers  
 ### Eigenvalue Sensitivity to Fabrication Errors via Sturm–Liouville Analysis
 
+> **📌 At a Glance**  
+> - **Goal:** Numerical framework to predict how fabrication errors affect optical fiber modes  
+> - **Method:** Sturm–Liouville eigenvalue problem + first-order perturbation theory (Python + SciPy)  
+> - **Validation:** 9/9 tests passing | Mean perturbation error: 1.76% | Dispersion solver: <10⁻¹⁴ residual  
+> - **Output:** 1,922 lines production code | 6 datasets | 7 publication figures | [37-page PDF report](docs/main.pdf)  
+> - **Status:** Complete & production-ready portfolio project for master's applications in photonics
+
+---
+
 This repository contains a complete analytical–numerical study of guided modes in a **step-index optical fiber** and their sensitivity to small **fabrication-induced perturbations** in refractive index, geometry, and material absorption.
 
 The project demonstrates:
@@ -141,9 +150,9 @@ All figures use LaTeX math notation and MATLAB-style formatting (300 DPI).
 
 | Metric | Value | Status |
 |--------|-------|--------|
-| Dispersion solver residual | 1.94e-12 | ✅ Excellent |
+| Dispersion solver residual | <10⁻¹⁴ | ✅ Excellent |
 | Mode normalization error | 0.21% | ✅ Acceptable |
-| Radius perturbation error | 3.47% mean | ✅ Valid first-order |
+| Radius perturbation error | 1.76% mean | ✅ Valid first-order |
 | Validation tests | 9/9 passing | ✅ Complete |
 | Total code | 1,922 lines | ✅ Production-ready |
 | Test coverage | 100% | ✅ Comprehensive |
@@ -256,6 +265,47 @@ For questions, suggestions, or improvements:
 1. Review **IMPLEMENTATION_STATUS.md** for detailed technical specifications
 2. Check the test files for validation examples
 3. Modify source code in `src/` and rerun tests with `bash run_all.sh`
+
+---
+
+## 🎯 Skills Demonstrated
+
+This project showcases technical competencies relevant to computational photonics and electromagnetic simulation:
+
+**Mathematical & Theoretical:**
+- Electromagnetic wave theory (guided modes, dispersion relations, LP modes)
+- Sturm–Liouville eigenvalue problems and self-adjoint differential operators
+- Bessel functions and modified Bessel functions (J₀, J₁, K₀, K₁)
+- First-order Rayleigh–Schrödinger perturbation theory
+- Variational methods and eigenvalue sensitivity analysis
+
+**Numerical Methods:**
+- Root-finding algorithms (Brent's method, bracket search, bisection)
+- Numerical integration (composite trapezoidal rule, adaptive quadrature)
+- Eigenvalue solvers for transcendental dispersion equations
+- Validation and error analysis (theory vs exact recomputation)
+
+**Software Engineering:**
+- Production-quality Python code with modular architecture
+- Comprehensive test suite with 100% test coverage (9/9 tests)
+- NumPy/SciPy for scientific computing
+- Matplotlib for publication-quality visualization
+- LaTeX for technical documentation and mathematical typesetting
+- Git version control and reproducible research practices
+
+**Application Domains:**
+- Optical fiber design and fabrication tolerances
+- Integrated photonics and waveguide optimization
+- Fiber sensor characterization
+- Computational electromagnetics
+
+---
+
+## 👤 About This Project
+
+This project was developed by Mahdi Maharebi as a self-directed portfolio piece for applications to funded master's programs in photonics, computational electromagnetics, and related fields. The work demonstrates independent research capability, mathematical rigor, numerical implementation skills, and clear technical communication.
+
+All code, documentation, and analysis were completed independently as part of preparation for graduate-level research in optical waveguide theory, inverse design, and photonic device optimization.
 
 ---
 

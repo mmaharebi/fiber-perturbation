@@ -1,0 +1,7 @@
+# Python dependencies for fiber-perturbation project
+# Numerical computation and scientific computing
+numpy>=1.20.0
+scipy>=1.7.0
+
+# Visualization and plotting
+matplotlib>=3.3.0
