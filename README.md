@@ -94,7 +94,7 @@ fiber-perturbation/
 ### Installation
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/mmaharebi/fiber-perturbation.git
 cd fiber-perturbation
 
 # No external dependencies required beyond scipy, numpy, matplotlib
@@ -303,9 +303,9 @@ This project showcases technical competencies relevant to computational photonic
 
 ## 👤 About This Project
 
-This project was developed by Mahdi Maharebi as a self-directed portfolio piece for applications to funded master's programs in photonics, computational electromagnetics, and related fields. The work demonstrates independent research capability, mathematical rigor, numerical implementation skills, and clear technical communication.
+This project was developed by Mahdy Mahareb, an ECE student at the University of Kassel (Germany), as a portfolio demonstration of independent work in computational electromagnetics and photonic device design.
 
-All code, documentation, and analysis were completed independently as part of preparation for graduate-level research in optical waveguide theory, inverse design, and photonic device optimization.
+**Contact:** contact@mahdymahareb.de | **Website:** https://mahdymahareb.de | **GitHub:** https://github.com/mmaharebi
 
 ---
 

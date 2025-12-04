@@ -1,7 +1,7 @@
 # Perturbation Theory for Optical Fibers: A Numerical Framework
 
 > **Blog Post Draft for Personal Website**  
-> **Author:** Mahdi Maharebi  
+> **Author:** Mahdy Mahareb  
 > **Date:** December 2025  
 > **GitHub Repository:** [fiber-perturbation](https://github.com/mmaharebi/fiber-perturbation)  
 > **Full Report (PDF):** [37-page technical document](https://github.com/mmaharebi/fiber-perturbation/blob/master/docs/main.pdf)
@@ -184,10 +184,11 @@ Feel free to explore the code, run the tests, or reach out if you have questions
 
 ## About Me
 
-I'm Mahdi Maharebi, currently preparing applications for funded master's programs in photonics, computational electromagnetics, and related fields. This project represents my independent work in numerical electromagnetics and demonstrates my readiness for graduate-level research.
+I'm Mahdy Mahareb, an ECE student at the University of Kassel (Germany), currently preparing applications for funded master's programs in photonics, computational electromagnetics, and related fields. This project represents my independent work in numerical electromagnetics and demonstrates my readiness for graduate-level research.
 
-**Contact:** [Your email/LinkedIn]  
-**Other Projects:** [Links to other portfolio pieces]
+**Contact:** contact@mahdymahareb.de  
+**Website:** https://mahdymahareb.de  
+**GitHub:** https://github.com/mmaharebi
 
 ---
 
