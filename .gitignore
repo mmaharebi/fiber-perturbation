@@ -60,6 +60,8 @@ env/
 # Build output
 docs/build/
 *.pdf
+!docs/main.pdf
+!figures/*.pdf
 
 # IDE
 .vscode/
