@@ -1,0 +1,162 @@
+% 06_perturbation_scenarios.tex
+\section{Perturbation Scenarios}
+
+\subsection{Localized Index Perturbation}
+
+\subsubsection{Doping and Diffusion Effects}
+
+A common fabrication imperfection in optical fibers is the diffusion of dopants (such as germanium in silica fibers) or unintended chemical species near the core-cladding interface. This creates a localized change in refractive index concentrated in a thin region of thickness $\delta$ centered approximately at the core radius $a$.
+
+The perturbation profile is modeled as:
+\[
+\Delta n^2(r) =
+\begin{cases}
+\Delta n_0^2, & a - \delta < r < a + \delta, \\
+0, & \text{otherwise},
+\end{cases}
+\]
+where $\Delta n_0$ is the index change magnitude and $\delta$ is the thickness of the perturbed region. For realistic fiber fabrication, $\delta \ll a$, so the perturbation is confined to a narrow annular shell near the interface.
+
+This model is relevant to:
+\begin{itemize}
+  \item \textbf{Germanium-doped cores:} In standard telecommunications fibers, GeO$_2$ doping raises the refractive index $n_1$ above that of pure silica. Over time, thermal diffusion or photochemical reactions can alter the doping profile.
+  
+  \item \textbf{Phosphorus or boron diffusion:} Phosphorus pentoxide (P$_2$O$_5$) increases $n_1$, while boron oxide (B$_2$O$_3$) decreases it. Both can diffuse during high-temperature processing.
+  
+  \item \textbf{Environmental absorption:} Moisture or impurities absorbed at the interface introduce weak absorption (imaginary part of index change).
+\end{itemize}
+
+\subsubsection{Boundary Layer Perturbation Model}
+
+Using the unit-normalized formula from Section 5:
+\[
+\Delta n_{\text{eff}} = \frac{1}{2n_{\text{eff}}} \int_{a-\delta}^{a+\delta} \Delta n_0^2 \, |\Psi(r)|^2 \, 2\pi r \, \dd{r}.
+\]
+
+For $\delta \ll a$, the mode profile $\Psi(r)$ varies slowly across the thin shell, so we can approximate:
+\[
+|\Psi(r)|^2 \approx |\Psi(a)|^2 \quad \text{for} \quad r \in [a-\delta, a+\delta].
+\]
+
+Thus:
+\[
+\Delta n_{\text{eff}} \approx \frac{\Delta n_0^2 |\Psi(a)|^2}{2n_{\text{eff}}} \int_{a-\delta}^{a+\delta} 2\pi r \, \dd{r} = \frac{\Delta n_0^2 |\Psi(a)|^2 \cdot 2\pi a \cdot 2\delta}{2n_{\text{eff}}}.
+\]
+
+Simplifying:
+\[
+\Delta n_{\text{eff}} \approx \frac{2\pi a \delta \, \Delta n_0^2 |\Psi(a)|^2}{n_{\text{eff}}}.
+\]
+
+This shows that the sensitivity is proportional to the perturbation magnitude $\Delta n_0^2$, the shell thickness $\delta$, and the mode intensity at the interface $|\Psi(a)|^2$.
+
+\subsection{Core Radius Variation}
+
+\subsubsection{Geometric Perturbation}
+
+A second important perturbation is a variation in core radius: $a \to a + \Delta a$, where $|\Delta a| \ll a$. This can arise from:
+\begin{itemize}
+  \item Etching tolerances in fiber drawing
+  \item Non-uniform radial heating during fabrication
+  \item Mechanical stress-induced swelling
+\end{itemize}
+
+A change in core radius effectively changes the V-number:
+\[
+V \to V + \Delta V = k_0(a + \Delta a)\sqrt{n_1^2 - n_2^2}.
+\]
+
+The change in $n_{\text{eff}}$ can be computed by numerical differentiation:
+\[
+\frac{\dd{n_{\text{eff}}}}{\dd{a}} \approx \frac{n_{\text{eff}}(a + \Delta a) - n_{\text{eff}}(a)}{\Delta a}.
+\]
+
+For small $\Delta a$:
+\[
+\Delta n_{\text{eff}} \approx \frac{\dd{n_{\text{eff}}}}{\dd{a}} \, \Delta a.
+\]
+
+\subsubsection{Equivalent Perturbation Ring}
+
+An alternative approach using perturbation theory is to model the radius change as an equivalent index perturbation confined to a thin shell at $r = a$. A rigorous derivation shows that:
+\[
+\Delta n^2_{\text{eq}}(r) \approx 2n_1(n_1^2 - n_2^2) \frac{\Delta a}{a} \delta(r - a),
+\]
+where $\delta(r - a)$ is the Dirac delta function. This represents a jump in index at the core boundary.
+
+Applying the perturbation formula with this equivalent profile yields:
+\[
+\Delta\beta = -\frac{k_0^2}{2\beta} \cdot 2n_1(n_1^2 - n_2^2) \frac{\Delta a}{a} |\Psi(a)|^2 \cdot 2\pi a.
+\]
+
+Simplifying:
+\[
+\Delta n_{\text{eff}} = \frac{\Delta\beta}{k_0} = -\frac{k_0 n_1(n_1^2 - n_2^2)}{n_{\text{eff}}} \frac{\Delta a}{a} |\Psi(a)|^2 \cdot 2\pi a.
+\]
+
+This formula connects the radius sensitivity to the mode field at the interface and the waveguide parameters.
+
+\subsection{Weak Absorption}
+
+\subsubsection{Complex Permittivity}
+
+Material absorption (loss) can be represented by a complex refractive index. With the phasor convention $\exp(-\imag\beta z + \imag\omega t)$ and requiring positive attenuation for absorption, the complex refractive index must be:
+\[
+\tilde{n}(r) = n(r) - \imag \kappa(r),
+\]
+where $\kappa(r) \geq 0$ is the absorption index (extinction coefficient) and $n(r)$ is the real part. With complex propagation constant $\tilde{\beta} = \beta_r - \imag\alpha$ (where $\alpha \geq 0$ for attenuation), the field behaves as $\exp(-\imag\tilde{\beta}z) = \exp(-\imag\beta_r z - \alpha z)$, giving exponential decay for $\alpha > 0$.
+
+The permittivity becomes:
+\[
+\tilde{\epsilon}(r) = \epsilon_0 \tilde{n}^2(r) = \epsilon_0(n^2 - \kappa^2 - 2\imag n\kappa).
+\]
+
+For weak absorption ($\kappa \ll n$), we keep only the leading order:
+\[
+\tilde{\epsilon}(r) \approx \epsilon_0(n^2 - 2\imag n\kappa).
+\]
+
+The perturbation to the permittivity is:
+\[
+\Delta\epsilon(r) = -2\imag\epsilon_0 n(r) \kappa(r).
+\]
+
+In terms of refractive index perturbation:
+\[
+\Delta n^2(r) = \tilde{n}^2 - n^2 \approx -2\imag n(r) \kappa(r).
+\]
+
+\subsubsection{Attenuation Constant}
+
+Applying first-order perturbation theory to the complex propagation constant $\tilde{\beta} = \beta_r - \imag\alpha$, where $\alpha \geq 0$ is the attenuation constant:
+\[
+\Delta\tilde{\beta} = \frac{k_0^2}{2\tilde{\beta}} \int_0^\infty \Delta n^2(r) |\Psi(r)|^2 \, 2\pi r \, \dd{r}.
+\]
+
+Substituting $\Delta n^2 \approx -2\imag n(r) \kappa(r)$ for weak absorption and $\tilde{\beta} \approx \beta = k_0 n_{\text{eff}}$:
+\[
+\Delta\tilde{\beta} \approx \frac{k_0^2}{2k_0 n_{\text{eff}}} \int_0^\infty (-2\imag n(r) \kappa(r)) |\Psi(r)|^2 \, 2\pi r \, \dd{r} = -\imag\frac{k_0}{n_{\text{eff}}} \int_0^\infty n(r) \kappa(r) |\Psi(r)|^2 \, 2\pi r \, \dd{r}.
+\]
+
+Since $\Delta\tilde{\beta} = \Delta\beta_r - \imag\Delta\alpha$, and the integral is real, we have $\Delta\beta_r = 0$ and:
+\[
+-\imag\Delta\alpha = -\imag\frac{k_0}{n_{\text{eff}}} \int_0^\infty n(r) \kappa(r) |\Psi(r)|^2 \, 2\pi r \, \dd{r}.
+\]
+
+Therefore:
+\[
+\Delta\alpha = \frac{k_0}{n_{\text{eff}}} \int_0^\infty n(r) \kappa(r) |\Psi(r)|^2 \, 2\pi r \, \dd{r}.
+\]
+
+For a localized absorber confined to the core ($\kappa(r) = \kappa_0$ for $r < a$, zero otherwise):
+\[
+\Delta\alpha \approx \frac{k_0 n_1 \kappa_0}{n_{\text{eff}}} \int_0^a |\Psi(r)|^2 \, 2\pi r \, \dd{r} = \frac{k_0 n_1 \kappa_0}{n_{\text{eff}}} P_{\text{core}},
+\]
+where $P_{\text{core}}$ is the fraction of modal power confined to the core. For the fundamental mode, $P_{\text{core}} \gtrsim 0.8$, so the attenuation is significant.
+
+This formula is relevant to:
+\begin{itemize}
+  \item \textbf{Doped fiber lasers and amplifiers:} The rare-earth dopants (Er$^{3+}$, Yb$^{3+}$) introduce absorption and gain
+  \item \textbf{Chemical sensing:} Analytes in solution or on fiber surfaces introduce absorption
+  \item \textbf{Loss management:} Understanding absorption helps optimize fiber design for low-loss propagation
+\end{itemize}

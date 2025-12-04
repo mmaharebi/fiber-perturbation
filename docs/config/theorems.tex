@@ -1,0 +1,418 @@
+% theorems.tex
+% Theorem-like environments using tcolorbox for better visual presentation
+% NOTE: Colors are defined in config/theme.tex
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COLORED THEOREM ENVIRONMENTS (using tcolorbox)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Theorem (royal blue) - formal mathematical statements
+\newtcbtheorem[number within=section]{theorem}{Theorem}{
+  colback=theorem-blue!5,
+  colframe=theorem-blue,
+  coltitle=white,
+  fonttitle=\bfseries,
+  boxrule=0.8pt,
+  arc=3pt,
+  left=8pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt
+}{thm}
+
+% Definition (teal) - foundational concepts
+\newtcbtheorem[use counter from=theorem]{definition}{Definition}{
+  colback=definition-teal!5,
+  colframe=definition-teal,
+  coltitle=white,
+  fonttitle=\bfseries,
+  boxrule=0.8pt,
+  arc=3pt,
+  left=8pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt
+}{def}
+
+% Lemma (blue variant) - supporting theorems
+\newtcbtheorem[use counter from=theorem]{lemma}{Lemma}{
+  colback=theorem-blue!5,
+  colframe=theorem-blue!85,
+  coltitle=white,
+  fonttitle=\bfseries,
+  boxrule=0.8pt,
+  arc=3pt,
+  left=8pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt
+}{lem}
+
+% Proposition (blue variant) - formal statements
+\newtcbtheorem[use counter from=theorem]{proposition}{Proposition}{
+  colback=theorem-blue!5,
+  colframe=theorem-blue!85,
+  coltitle=white,
+  fonttitle=\bfseries,
+  boxrule=0.8pt,
+  arc=3pt,
+  left=8pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt
+}{prop}
+
+% Corollary (blue variant) - consequences of theorems
+\newtcbtheorem[use counter from=theorem]{corollary}{Corollary}{
+  colback=theorem-blue!5,
+  colframe=theorem-blue!85,
+  coltitle=white,
+  fonttitle=\bfseries,
+  boxrule=0.8pt,
+  arc=3pt,
+  left=8pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt
+}{cor}
+
+% Example (slate gray) - illustrations
+\newtcbtheorem[use counter from=theorem]{example}{Example}{
+  colback=example-slate!5,
+  colframe=example-slate,
+  coltitle=white,
+  fonttitle=\bfseries,
+  boxrule=0.8pt,
+  arc=3pt,
+  left=8pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt
+}{ex}
+
+% Remark (purple) - observations and notes
+\newtcbtheorem[use counter from=theorem]{remark}{Remark}{
+  colback=remark-purple!5,
+  colframe=remark-purple,
+  coltitle=white,
+  fonttitle=\bfseries,
+  boxrule=0.8pt,
+  arc=3pt,
+  left=8pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt
+}{rem}
+
+% Note (purple variant) - additional observations
+\newtcbtheorem[use counter from=theorem]{note}{Note}{
+  colback=remark-purple!5,
+  colframe=remark-purple!85,
+  coltitle=white,
+  fonttitle=\bfseries,
+  boxrule=0.8pt,
+  arc=3pt,
+  left=8pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt
+}{note}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SIMPLE ENVIRONMENTS (for backward compatibility with amsthm syntax)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% These use the standard amsthm syntax: \begin{exampleplain}[Optional Title]
+% Restore simple theorem environments for those that don't need fancy boxes
+\theoremstyle{definition}
+\newtheorem{exampleplain}{Example}[section]
+\newtheorem{remarkplain}[exampleplain]{Remark}
+\newtheorem{definitionplain}[exampleplain]{Definition}
+
+% Make standard environments use the plain versions by default for backward compatibility
+% Users can use the tcolorbox versions by explicitly calling them with {title}{label}
+\let\example\exampleplain
+\let\endexample\endexampleplain
+\let\remark\remarkplain
+\let\endremark\endremarkplain
+\let\definition\definitionplain
+\let\enddefinition\enddefinitionplain
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% UTILITY BOXES (non-numbered environments)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Warning box (red) - critical alerts
+\newtcolorbox{warningbox}{
+  colback=warning-red!5,
+  colframe=warning-red,
+  coltitle=white,
+  title=Warning,
+  fonttitle=\bfseries,
+  boxrule=0.8pt,
+  arc=3pt,
+  left=8pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt
+}
+
+% Important box (orange) - key information
+\newtcolorbox{importantbox}{
+  colback=important-orange!5,
+  colframe=important-orange,
+  coltitle=white,
+  title=Important,
+  fonttitle=\bfseries,
+  boxrule=0.8pt,
+  arc=3pt,
+  left=8pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt
+}
+
+% Question box (amber) - inquiry and problems
+\newtcolorbox{questionbox}{
+  colback=question-amber!5,
+  colframe=question-amber,
+  coltitle=white,
+  title=Question,
+  fonttitle=\bfseries,
+  boxrule=0.8pt,
+  arc=3pt,
+  left=8pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt
+}
+
+% Answer box (green) - for homework/exercise solutions
+\newtcolorbox{answerbox}{
+  colback=success-green!5,
+  colframe=success-green,
+  coltitle=white,
+  title=Answer,
+  fonttitle=\bfseries,
+  boxrule=0.8pt,
+  arc=3pt,
+  left=8pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt
+}
+
+% Solution box (green variant) - detailed solutions
+\newtcolorbox{solutionbox}{
+  colback=success-green!5,
+  colframe=success-green!85,
+  coltitle=white,
+  title=Solution,
+  fonttitle=\bfseries,
+  boxrule=0.8pt,
+  arc=3pt,
+  left=8pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt
+}
+
+% Tip box (teal) - helpful hints
+\newtcolorbox{tipbox}{
+  colback=secondary-main!5,
+  colframe=secondary-main,
+  coltitle=white,
+  title=Tip,
+  fonttitle=\bfseries,
+  boxrule=0.8pt,
+  arc=3pt,
+  left=8pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CODE BOXES (with syntax highlighting)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Load tcolorbox library for listings integration
+\tcbuselibrary{listings,skins,breakable}
+
+% Code box with title (using listings)
+\newtcblisting{codebox}[2][]{
+  colback=bg-light,
+  colframe=example-slate,
+  coltitle=white,
+  title=#2,
+  fonttitle=\bfseries,
+  boxrule=0.8pt,
+  arc=3pt,
+  left=0pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt,
+  breakable,
+  skin=enhanced jigsaw,
+  listing only,
+  listing options={
+    basicstyle=\ttfamily\small\color{text-primary},
+    keywordstyle=\color{primary-main}\bfseries,
+    commentstyle=\color{text-secondary}\itshape,
+    stringstyle=\color{success-green},
+    numberstyle=\tiny\color{text-secondary},
+    numbers=left,
+    numbersep=8pt,
+    xleftmargin=20pt,
+    tabsize=4,
+    breaklines=true,
+    showstringspaces=false,
+    #1
+  }
+}
+
+% Inline code box (no title, no line numbers)
+\newtcblisting{codeblock}[1][]{
+  colback=bg-light,
+  colframe=divider,
+  boxrule=0.5pt,
+  arc=2pt,
+  left=8pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt,
+  breakable,
+  skin=enhanced jigsaw,
+  listing only,
+  listing options={
+    basicstyle=\ttfamily\small\color{text-primary},
+    keywordstyle=\color{primary-main}\bfseries,
+    commentstyle=\color{text-secondary}\itshape,
+    stringstyle=\color{success-green},
+    numbers=none,
+    tabsize=4,
+    breaklines=true,
+    showstringspaces=false,
+    #1
+  }
+}
+
+% Language-specific code boxes (convenient shortcuts)
+\newtcblisting{pythoncode}[1][]{
+  listing options={language=Python},
+  colback=bg-light,
+  colframe=example-slate,
+  coltitle=white,
+  title=Python Code,
+  fonttitle=\bfseries,
+  boxrule=0.8pt,
+  arc=3pt,
+  left=0pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt,
+  breakable,
+  skin=enhanced jigsaw,
+  listing only,
+  listing options={
+    language=Python,
+    basicstyle=\ttfamily\small\color{text-primary},
+    keywordstyle=\color{primary-main}\bfseries,
+    commentstyle=\color{text-secondary}\itshape,
+    stringstyle=\color{success-green},
+    numberstyle=\tiny\color{text-secondary},
+    numbers=left,
+    numbersep=8pt,
+    xleftmargin=20pt,
+    tabsize=4,
+    breaklines=true,
+    showstringspaces=false,
+    #1
+  }
+}
+
+\newtcblisting{javacode}[1][]{
+  listing options={language=Java},
+  colback=bg-light,
+  colframe=example-slate,
+  coltitle=white,
+  title=Java Code,
+  fonttitle=\bfseries,
+  boxrule=0.8pt,
+  arc=3pt,
+  left=0pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt,
+  breakable,
+  skin=enhanced jigsaw,
+  listing only,
+  listing options={
+    language=Java,
+    basicstyle=\ttfamily\small\color{text-primary},
+    keywordstyle=\color{primary-main}\bfseries,
+    commentstyle=\color{text-secondary}\itshape,
+    stringstyle=\color{success-green},
+    numberstyle=\tiny\color{text-secondary},
+    numbers=left,
+    numbersep=8pt,
+    xleftmargin=20pt,
+    tabsize=4,
+    breaklines=true,
+    showstringspaces=false,
+    #1
+  }
+}
+
+\newtcblisting{cppcode}[1][]{
+  listing options={language=C++},
+  colback=bg-light,
+  colframe=example-slate,
+  coltitle=white,
+  title=C++ Code,
+  fonttitle=\bfseries,
+  boxrule=0.8pt,
+  arc=3pt,
+  left=0pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt,
+  breakable,
+  skin=enhanced jigsaw,
+  listing only,
+  listing options={
+    language=C++,
+    basicstyle=\ttfamily\small\color{text-primary},
+    keywordstyle=\color{primary-main}\bfseries,
+    commentstyle=\color{text-secondary}\itshape,
+    stringstyle=\color{success-green},
+    numberstyle=\tiny\color{text-secondary},
+    numbers=left,
+    numbersep=8pt,
+    xleftmargin=20pt,
+    tabsize=4,
+    breaklines=true,
+    showstringspaces=false,
+    #1
+  }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% STANDARD THEOREM ENVIRONMENTS (commented out, kept for reference)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% % Standard amsthm theorem environments (plain style)
+% \newtheorem{theorem}{Theorem}[section]
+% \newtheorem{lemma}[theorem]{Lemma}
+% \newtheorem{proposition}[theorem]{Proposition}
+% \newtheorem{corollary}[theorem]{Corollary}
+% 
+% % Definition environments
+% \newtheorem{definition}[theorem]{Definition}
+% \newtheorem{example}[theorem]{Example}
+% \newtheorem{remark}[theorem]{Remark}
+% \newtheorem{note}[theorem]{Note}
+
+% Proof environment (already defined by amsthm, but can be customized)
+% \renewcommand{\qedsymbol}{$\blacksquare$}

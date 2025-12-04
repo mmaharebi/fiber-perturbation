@@ -1,0 +1,319 @@
+% macros.tex
+% Custom mathematical notation macros for scalars, vectors, matrices, and tensors
+% NOTE: Derivative operators, quantum mechanics, and some utilities now use the
+%       production-ready 'physics' package for better robustness and maintainability
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PHYSICAL-STYLE NOTATION MACROS (Custom - Unique Underline Style)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Scalar: italic (default math mode, explicit wrapper for consistency)
+\newcommand{\scalar}[1]{\mathit{#1}}
+
+% Advanced underline helpers for proper spacing and kerning
+\makeatletter
+% Double overline helper (not used but included for completeness)
+\newcommand{\dbloverline}[1]{\overline{\dbl@overline{#1}}}
+\newcommand{\dbl@overline}[1]{\mathpalette\dbl@@overline{#1}}
+\newcommand{\dbl@@overline}[2]{%
+  \begingroup
+  \sbox\z@{$\m@th#1\overline{#2}$}%
+  \ht\z@=\dimexpr\ht\z@-2\dbl@adjust{#1}\relax
+  \box\z@
+  \ifx#1\scriptstyle\kern-\scriptspace\else
+  \ifx#1\scriptscriptstyle\kern-\scriptspace\fi\fi
+  \endgroup
+}
+
+% Double underline helper with proper spacing
+\newcommand{\dblunderline}[1]{\@@underline{\dbl@underline{#1}}}
+\newcommand{\dbl@underline}[1]{\mathpalette\dbl@@underline{#1}}
+\newcommand{\dbl@@underline}[2]{%
+  \begingroup
+  \sbox\z@{$\m@th#1\@@underline{#2}$}%
+  \dp\z@=\dimexpr\dp\z@-2\dbl@adjust{#1}\relax
+  \box\z@
+  \ifx#1\scriptstyle\kern-\scriptspace\else
+  \ifx#1\scriptscriptstyle\kern-\scriptspace\fi\fi
+  \endgroup
+}
+
+% Adjustment factor for different math styles
+\newcommand{\dbl@adjust}[1]{%
+  \fontdimen8
+  \ifx#1\displaystyle\textfont\else
+  \ifx#1\textstyle\textfont\else
+  \ifx#1\scriptstyle\scriptfont\else
+  \scriptscriptfont\fi\fi\fi 3
+}
+
+% Kerning correction helper
+\newcommand{\mathcorr}[1]{\mathpalette\math@corr{#1}}
+\newcommand{\math@corr}[2]{%
+  \begingroup
+  \sbox\z@{$\m@th#1#2$}\sbox2{$\m@th#1#2_{}\kern-\scriptspace$}%
+  \kern\dimexpr\wd\z@-\wd\tw@\relax
+  \endgroup
+}
+\makeatother
+
+% Vector: bold + single underline with proper spacing and kerning
+\renewcommand{\vec}[1]{{\bm{%
+  \mspace{0.5mu}%
+  \underline{\mspace{-0.5mu}#1_{}\kern-\scriptspace\mspace{-0.5mu}}%
+  \mspace{0.5mu}%
+  \mathcorr{#1}%
+}}}
+
+% Matrix: bold + double underline with proper spacing and kerning
+\newcommand{\mat}[1]{{\bm{%
+  \mspace{0.5mu}%
+  \dblunderline{\mspace{-0.5mu}#1_{}\kern-\scriptspace\mspace{-0.5mu}}%
+  \mspace{0.5mu}%
+  \mathcorr{#1}%
+}}}
+
+% Tensor (order >= 3): bold calligraphic (optional)
+\newcommand{\tensor}[1]{\boldsymbol{\mathcal{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CONVENIENCE MACROS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Differential (physics package provides \dd, but we keep \dif for compatibility)
+\newcommand{\dif}{\mathrm{d}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\imag}{\mathrm{j}}  % Imaginary unit (engineering convention)
+
+% Probability and Statistics
+\newcommand{\Prob}[1]{\mathrm{P}\left(#1\right)}                    % Probability: P(A)
+\newcommand{\given}{\,|\,}                                          % Conditional: P(A|B)
+\newcommand{\Expect}[1]{\mathrm{E}\left[#1\right]}                  % Expectation: E[X]
+\newcommand{\Var}[1]{\mathrm{Var}\left(#1\right)}                   % Variance: Var(X)
+\newcommand{\Cov}[2]{\mathrm{Cov}\left(#1, #2\right)}               % Covariance: Cov(X,Y)
+\newcommand{\Corr}[2]{\mathrm{Corr}\left(#1, #2\right)}             % Correlation: Corr(X,Y)
+\newcommand{\StdDev}[1]{\mathrm{SD}\left(#1\right)}                 % Standard deviation: SD(X)
+\newcommand{\bias}[1]{\mathrm{bias}\left(#1\right)}                 % Bias: bias(θ̂)
+\newcommand{\MSE}[1]{\mathrm{MSE}\left(#1\right)}                   % Mean squared error: MSE(θ̂)
+
+% Distributions
+\newcommand{\Normal}[2]{\mathcal{N}\left(#1, #2\right)}             % Normal distribution: N(μ,σ²)
+\newcommand{\Uniform}[2]{\mathcal{U}\left(#1, #2\right)}            % Uniform distribution: U(a,b)
+\newcommand{\Bernoulli}[1]{\mathrm{Bernoulli}\left(#1\right)}       % Bernoulli(p)
+\newcommand{\Binomial}[2]{\mathrm{Binomial}\left(#1, #2\right)}     % Binomial(n,p)
+\newcommand{\Poisson}[1]{\mathrm{Poisson}\left(#1\right)}           % Poisson(λ)
+\newcommand{\Exponential}[1]{\mathrm{Exp}\left(#1\right)}           % Exponential(λ)
+
+% Convergence
+\newcommand{\convdist}{\xrightarrow{d}}                             % Convergence in distribution
+\newcommand{\convprob}{\xrightarrow{p}}                             % Convergence in probability
+\newcommand{\convas}{\xrightarrow{a.s.}}                            % Almost sure convergence
+\newcommand{\convLp}[1]{\xrightarrow{L^{#1}}}                       % L^p convergence
+
+% Independence and identically distributed
+\newcommand{\iid}{\stackrel{\text{iid}}{\sim}}                      % i.i.d. notation
+\newcommand{\ind}{\perp\!\!\!\perp}                                 % Independence symbol
+
+% Indicator function (using dsfont package)
+\newcommand{\Ind}[1]{\mathds{1}_{#1}}                               % Indicator: 𝟙_A
+\newcommand{\One}{\mathds{1}}                                       % Indicator: 𝟙
+
+% Optimization
+\DeclareMathOperator*{\argmin}{arg\,min}                            % Argmin: argmin
+\DeclareMathOperator*{\argmax}{arg\,max}                            % Argmax: argmax
+\newcommand{\minimize}{\operatorname{minimize}}                      % minimize
+\newcommand{\maximize}{\operatorname{maximize}}                      % maximize
+\newcommand{\subjectto}{\operatorname{subject\,to}}                 % subject to
+
+% Set Theory
+\newcommand{\set}[1]{\left\{#1\right\}}                            % Set notation: {·}
+\newcommand{\setbuilder}[2]{\left\{#1 \mid #2\right\}}             % Set builder: {x | condition}
+\newcommand{\card}[1]{\left|#1\right|}                              % Cardinality: |A|
+\newcommand{\powerset}[1]{\mathcal{P}\left(#1\right)}               % Power set: 𝒫(A)
+\newcommand{\union}{\cup}                                            % Union: ∪
+\newcommand{\Union}{\bigcup}                                         % Big union: ⋃
+\newcommand{\intersect}{\cap}                                        % Intersection: ∩
+\newcommand{\Intersect}{\bigcap}                                     % Big intersection: ⋂
+\newcommand{\comp}[1]{#1^{\complement}}                              % Complement: Aᶜ
+% Note: \setminus already defined in LaTeX for set difference: \
+
+% Complexity and Asymptotic Notation
+\newcommand{\Oh}{\mathcal{O}}                                        % Big-O: 𝒪
+\newcommand{\oh}{o}                                                  % Little-o: o
+% Note: \Omega, \omega, \Theta already defined as Greek letters
+% Use them directly for complexity notation
+
+% Linear Algebra Operators
+% Note: \rank already defined by physics package
+\DeclareMathOperator{\nullity}{nullity}                             % Nullity: nullity(A)
+\DeclareMathOperator{\Span}{span}                                   % Span: span(v₁,...,vₙ)
+\DeclareMathOperator{\Ker}{ker}                                     % Kernel: ker(T)
+\DeclareMathOperator{\Image}{im}                                    % Image: im(T)
+\DeclareMathOperator{\Null}{null}                                   % Null space: null(A)
+\DeclareMathOperator{\Row}{row}                                     % Row space: row(A)
+\DeclareMathOperator{\Col}{col}                                     % Column space: col(A)
+\DeclareMathOperator{\diag}{diag}                                   % Diagonal: diag(a₁,...,aₙ)
+\newcommand{\transpose}[1]{#1^{\top}}                                % Transpose: Aᵀ
+\newcommand{\hermitian}[1]{#1^{\dagger}}                             % Hermitian conjugate: A†
+\newcommand{\inv}[1]{#1^{-1}}                                        % Inverse: A⁻¹
+% Note: \det already defined in LaTeX, use it directly
+
+% Note: \abs{} and \norm{} are now provided by physics package
+% Note: \tr (trace) and \rank are provided by physics package
+% If you need custom sizing behavior, uncomment these:
+% \renewcommand{\abs}[1]{\left|#1\right|}
+% \renewcommand{\norm}[1]{\left\|#1\right\|}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DERIVATIVES (Using physics package)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% The physics package provides:
+% - \dv{f}{x}       : df/dx (total derivative)
+% - \dv[n]{f}{x}    : d^n f/dx^n (nth derivative)
+% - \pdv{f}{x}      : ∂f/∂x (partial derivative)
+% - \pdv[n]{f}{x}   : ∂^n f/∂x^n (nth partial)
+% - \pdv{f}{x}{y}   : ∂²f/∂x∂y (mixed partial)
+
+% Partial time derivative shorthand
+\newcommand{\partialt}{\partial_t}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SYMBOLIC OPERATORS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Definition symbol
+\newcommand{\eqdef}{\stackrel{\text{def}}{=}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COMMON VECTORS AND MATRICES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Common vectors
+\newcommand{\vzero}{\vec{0}}
+\newcommand{\vi}{\vec{i}}
+\newcommand{\vj}{\vec{j}}
+\newcommand{\vk}{\vec{k}}
+
+% Common matrices
+\newcommand{\mzero}{\mat{0}}
+\newcommand{\midentity}{\mat{I}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% UNIT VECTORS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Unit vector notation
+\newcommand{\uvec}[1]{\hat{\vec{#1}}}
+\newcommand{\uevec}[1]{{\vec{e}}_{#1}}  % Alternative shorthand
+
+% Unit vectors in Cartesian coordinates
+\newcommand{\xhat}{\hat{\vec{x}}}
+\newcommand{\yhat}{\hat{\vec{y}}}
+\newcommand{\zhat}{\hat{\vec{z}}}
+
+% Unit vectors in cylindrical coordinates
+\newcommand{\rhohat}{\hat{\vec{\rho}}}
+\newcommand{\phihat}{\hat{\vec{\phi}}}
+
+% Unit vectors in spherical coordinates
+\newcommand{\Rhat}{\hat{\vec{R}}}
+\newcommand{\thetahat}{\hat{\vec{\theta}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% VECTOR OPERATIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Note: physics package defines \vdot as derivative, so we use \vecdot for vector dot product
+\newcommand{\vecdot}{\bullet}
+\newcommand{\vproj}[2]{\text{proj}_{\vec{#1}}\vec{#2}}
+\newcommand{\vang}[2]{\angle(\vec{#1},\vec{#2})}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% VECTOR CALCULUS (Now using physics package!)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% The physics package provides:
+% - \grad    : ∇ (gradient)
+% - \div     : ∇· (divergence)
+% - \curl    : ∇× (curl)
+% - \laplacian : ∇² (Laplacian)
+
+% Note: physics already defines \vnabla, we can just use it directly
+
+% Legacy aliases (optional - uncomment if you prefer old names):
+% \renewcommand{\Div}{\div}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MATRIX OPERATORS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Note: physics package provides \tr for trace and \rank for rank
+% No need to redefine them
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% QUANTUM MECHANICS NOTATION (Now using physics package!)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% The physics package provides robust bra-ket notation:
+% - \ket{a}          : |a⟩
+% - \bra{b}          : ⟨b|
+% - \braket{a}{b}    : ⟨a|b⟩
+% - \ketbra{a}{b}    : |a⟩⟨b|
+% - \expval{A}       : ⟨A⟩ (expectation value)
+% - \expval{A}{\psi} : ⟨ψ|A|ψ⟩
+% - \mel{a}{B}{b}    : ⟨a|B|b⟩ (matrix element)
+% - \comm{A}{B}      : [A,B] (commutator)
+% - \acomm{A}{B}     : {A,B} (anticommutator)
+
+% Legacy alias for expectation (optional):
+% \newcommand{\expectation}[1]{\expval{#1}}
+
+% Operator hat notation
+\newcommand{\hop}[1]{\hat{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COMPLEX ANALYSIS NOTATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Real and imaginary parts (Gothic/Fraktur font)
+% Redefine the existing \Re and \Im commands to use Fraktur
+\renewcommand{\Re}{\mathfrak{Re}}
+\renewcommand{\Im}{\mathfrak{Im}}
+
+% Common sets
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LEGACY/DEPRECATED COMMANDS (Commented out - now using physics package)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% These commands are now provided by the physics package.
+% Uncomment if you need backward compatibility with old documents:
+
+% % Differential operators (replaced by physics \dv, \pdv)
+% \newcommand{\diff}{\mathrm{d}}
+% \newcommand{\Diff}{\mathrm{D}}
+% \newcommand{\pderiv}[2]{\frac{\partial #1}{\partial #2}}
+
+% % Absolute value and norm (replaced by physics \abs, \norm)
+% % Note: physics package provides automatic sizing
+% \renewcommand{\abs}[1]{\left|#1\right|}
+% \renewcommand{\norm}[1]{\left\|#1\right\|}
+
+% % Bra-ket notation (replaced by physics package)
+% \renewcommand{\ket}[1]{\left| #1 \right\rangle}
+% \renewcommand{\bra}[1]{\left\langle #1 \right|}
+% \renewcommand{\braket}[2]{\left\langle #1 \middle| #2 \right\rangle}
+% \renewcommand{\ketbra}[2]{\left| #1 \right\rangle\left\langle #2 \right|}
+% \renewcommand{\expectation}[1]{\left\langle #1 \right\rangle}
+
+% % Commutators (replaced by physics \comm, \acomm)
+% \renewcommand{\comm}[2]{\left[\hop{#1}, \hop{#2}\right]}
+% \renewcommand{\acomm}[2]{\left\{\hop{#1}, \hop{#2}\right\}}
+
+% % Trace operator (replaced by physics \tr)
+% \DeclareMathOperator{\trace}{tr}

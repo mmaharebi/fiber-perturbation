@@ -1,0 +1,141 @@
+% 09_applications.tex
+\section{Applications and Extensions}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\textwidth]{../figures/06_absorption.pdf}
+  \caption{%
+    \textbf{Weak absorption perturbation effects.}
+    Left: Modal attenuation $\alpha$ (1/m) versus fiber conductivity $\sigma$, computed from complex perturbation theory.
+    The attenuation spans 6 orders of magnitude ($10^{-8}$ to $10^{-2}\,\mu\text{m}^{-1}$) as conductivity ranges from $10^{-4}$ to $10^{2}\,\text{S/m}$, covering metals (high $\sigma$) to insulators (low $\sigma$).
+    Right: Attenuation length $L_{\text{att}} = 1/\alpha$ in decibels/meter, showing the transition from low-loss regimes (L$_{\text{att}} \gg 1$ km at low $\sigma$) to highly lossy media (L$_{\text{att}} \ll 1$ mm at high $\sigma$).
+    Both axes use logarithmic scales to visualize the wide dynamic range.
+  }
+  \label{fig:absorption}
+\end{figure}
+
+\subsection{Fiber-Optic Sensing}
+
+The sensitivity of the effective index to environmental perturbations forms the basis for numerous fiber-optic sensing applications.
+
+\subsubsection*{Temperature Sensing}
+
+The refractive indices of optical glasses exhibit temperature dependence:
+\[
+n_i(T) = n_i(T_0) + \frac{\dd{n_i}}{\dd{T}} (T - T_0),
+\]
+where the thermo-optic coefficient $\dd{n}/\dd{T} \approx 10^{-5} \, \text{K}^{-1}$ for silica-based glasses. Applying perturbation theory:
+\[
+\frac{\dd{n_{\text{eff}}}}{\dd{T}} = \frac{k_0^2}{2\beta} \int_0^\infty 2n(r) \frac{\dd{n}}{\dd{T}}(r) |\Psi(r)|^2 2\pi r \, \dd{r}.
+\]
+
+For a uniform thermo-optic coefficient throughout the fiber:
+\[
+\frac{\dd{n_{\text{eff}}}}{\dd{T}} \approx \frac{n_{\text{eff}}}{n_1} \frac{\dd{n_1}}{\dd{T}} \approx 10^{-5} \, \text{K}^{-1}.
+\]
+
+This corresponds to a phase shift of:
+\[
+\Delta\phi = \beta L \frac{\Delta n_{\text{eff}}}{n_{\text{eff}}} = \frac{2\pi}{\lambda_0} n_{\text{eff}} L \frac{1}{n_{\text{eff}}} \frac{\dd{n_{\text{eff}}}}{\dd{T}} \Delta T = \frac{2\pi L}{\lambda_0} \frac{\dd{n_{\text{eff}}}}{\dd{T}} \Delta T,
+\]
+which for $L = 1$ m, $\lambda_0 = 1.55 \, \mu$m, and $\Delta T = 1$ K gives $\Delta\phi \approx 40$ rad. This large phase shift can be detected interferometrically with high precision, making fiber-optic thermometry highly sensitive.
+
+\subsubsection*{Strain and Pressure Sensing}
+
+Mechanical strain modifies both the fiber geometry (radius $a$) and the refractive indices (through the photoelastic effect). For longitudinal strain $\epsilon_z$:
+\[
+\frac{\Delta n_{\text{eff}}}{n_{\text{eff}}} \approx -p_e \epsilon_z + \frac{1}{a} \frac{\partial n_{\text{eff}}}{\partial a} \Delta a,
+\]
+where $p_e \approx 0.22$ is the effective photoelastic constant and $\Delta a \approx -\nu a \epsilon_z$ with Poisson ratio $\nu \approx 0.17$ for silica.
+
+The perturbation framework enables quantitative calibration of the strain response, which is essential for distributed strain sensing in structural health monitoring.
+
+\subsubsection*{Chemical and Biological Sensing}
+
+Evanescent-wave sensors exploit the cladding field to detect analytes in the surrounding medium. If the cladding is replaced by a sensing region with index $n_s(c)$ depending on analyte concentration $c$:
+\[
+\frac{\partial n_{\text{eff}}}{\partial c} = \frac{\partial n_{\text{eff}}}{\partial n_s} \frac{\partial n_s}{\partial c} = \frac{k_0^2}{2\beta} \frac{\partial n_s}{\partial c} \int_a^\infty 2n_s |\Psi(r)|^2 2\pi r \, \dd{r}.
+\]
+
+The sensitivity is proportional to $(1 - P_{\text{core}})$, the fraction of power in the cladding. This explains why weakly-guiding or tapered fibers are preferred for evanescent sensing: they maximize the field overlap with the analyte region.
+
+\subsection{Integrated Photonics}
+
+The perturbation theory framework generalizes to integrated waveguide structures, where index variations are used to create functional devices.
+
+\subsubsection*{Bragg Gratings}
+
+A periodic index modulation $\Delta n^2(z) = \Delta n_0^2 \cos(2\beta_0 z)$ creates distributed reflection at the Bragg wavelength where the round-trip phase matches $2\pi$. Perturbation theory provides the coupling coefficient:
+\[
+\kappa = \frac{k_0^2 \Delta n_0^2}{4\beta_0} \int_0^\infty |\Psi(r)|^2 2\pi r \, \dd{r} = \frac{k_0^2 \Delta n_0^2}{4\beta_0}.
+\]
+
+The spectral width and reflectivity of the grating are determined by $\kappa$ and the grating length $L_g$. Perturbation theory enables rapid design of fiber Bragg gratings for wavelength filtering, dispersion compensation, and sensing.
+
+\subsubsection*{Directional Couplers}
+
+Two parallel waveguides with spacing $d$ couple power through evanescent overlap. The coupling coefficient is:
+\[
+C = \frac{k_0^2}{2\beta} \int_0^\infty \Delta n^2(r) \Psi_1(r) \Psi_2(r) 2\pi r \, \dd{r},
+\]
+where $\Psi_1$ and $\Psi_2$ are the isolated waveguide modes, and $\Delta n^2(r)$ represents the index modification introduced by the presence of the second waveguide. This perturbative calculation provides the coupling length $L_c = \pi/(2C)$ for power transfer.
+
+\subsubsection*{Mode Converters}
+
+Adiabatic tapers and asymmetric structures can convert power between different mode families (e.g., LP$_{01} \to$ LP$_{11}$). Perturbation theory guides the design by quantifying how effectively index or geometry variations couple initially orthogonal modes.
+
+\subsection{Modal Dispersion Engineering}
+
+In multimode fibers, different modes propagate with different group velocities, causing temporal dispersion of pulses. The differential group delay between modes LP$_{0\ell}$ and LP$_{0m}$ is:
+\[
+\Delta\tau = L \left( \frac{1}{v_{g,\ell}} - \frac{1}{v_{g,m}} \right) = \frac{L}{c} \left( N_{g,\ell} - N_{g,m} \right),
+\]
+where the group index is:
+\[
+N_g = n_{\text{eff}} - \lambda_0 \frac{\dd{n_{\text{eff}}}}{\dd{\lambda_0}}.
+\]
+
+Graded-index fibers with parabolic profiles $n^2(r) = n_1^2 [1 - 2\Delta (r/a)^2]$ minimize $\Delta\tau$ by equalizing group delays across modes. Perturbation theory enables optimization of the profile shape $n(r)$ to achieve specified dispersion characteristics.
+
+For mode-division multiplexing (MDM) systems, perturbative sensitivity analysis guides the design of low-crosstalk fibers by identifying geometries that maximize mode orthogonality and minimize perturbation-induced mode coupling.
+
+\subsection{Extensions and Generalizations}
+
+The Sturm-Liouville perturbation framework developed here extends naturally to more complex scenarios:
+
+\subsubsection*{Vector Modes}
+
+For strongly guiding fibers or high-contrast waveguides (e.g., photonic crystal fibers, silicon photonics), the scalar approximation breaks down and full vectorial Maxwell equations must be solved. The perturbation approach generalizes to vector eigenvalue problems:
+\[
+\mat{L} \vec{E} = \beta^2 \vec{E},
+\]
+where $\mat{L}$ is a vector differential operator. The inner product becomes:
+\[
+\langle \vec{E}_1, \vec{E}_2 \rangle = \int_{\mathbb{R}^2} \vec{E}_1^* \cdot \vec{E}_2 \, \dd{A}.
+\]
+
+Perturbation formulas retain analogous forms, but with vector field overlaps replacing scalar overlaps.
+
+\subsubsection*{Nonlinear Perturbations}
+
+Optical nonlinearities (Kerr effect) introduce intensity-dependent index changes:
+\[
+\Delta n^2 = 2n n_2 I,
+\]
+where $n_2 \approx 2.6 \times 10^{-20} \, \text{m}^2/\text{W}$ for silica and $I = |\vec{E}|^2/(2\eta)$ is the intensity. This creates self-phase modulation and cross-phase modulation effects. Perturbation theory provides the nonlinear propagation constant shift, which is essential for modeling soliton propagation and four-wave mixing.
+
+\subsubsection*{Time-Dependent Perturbations}
+
+Dynamic perturbations (vibrations, acoustic waves, temperature fluctuations) introduce time-varying index changes:
+\[
+\Delta n^2(r, t) = \Delta n_0^2(r) \cos(\Omega t),
+\]
+where $\Omega$ is the modulation frequency. This leads to frequency mixing and sidebands in the optical spectrum. Perturbation theory quantifies the modulation efficiency, which is relevant for acousto-optic modulators and dynamic strain sensing.
+
+\subsubsection*{Multimode Coupling}
+
+When perturbations break the azimuthal symmetry (e.g., elliptical deformation, bend-induced stress), modes with different $m$ values couple. The perturbation matrix element:
+\[
+\Delta\beta_{\ell m} = \frac{k_0^2}{2\sqrt{\beta_\ell \beta_m}} \int_0^\infty \int_0^{2\pi} \Delta n^2(r, \phi) \Psi_\ell(r) \cos(m_\ell \phi) \Psi_m(r) \cos(m_m \phi) r \, \dd{r} \, \dd{\phi}
+\]
+determines the coupling strength. This framework underpins the analysis of birefringence, polarization-mode dispersion, and mode coupling in bent fibers.

@@ -1,0 +1,80 @@
+% packages.tex
+% All package imports for the Physical-Style Notation Template
+
+% Encoding and fonts
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% Mathematics
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}  % Bold math symbols
+
+% Physics notation (production-ready package for derivatives, operators, quantum mechanics)
+\usepackage{physics}
+% Note: We keep custom \vec, \mat, \tensor notation for the unique underline style
+
+% Graphics and figures
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% TikZ libraries for advanced drawings
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{calc}
+\usetikzlibrary{angles}
+\usetikzlibrary{quotes}
+\usetikzlibrary{patterns}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{decorations.pathmorphing}
+
+% Page layout
+\usepackage{geometry}
+\geometry{margin=1in}
+
+% Colors (basic package - specific colors defined in theme.tex)
+\usepackage{xcolor}
+
+% Hyperlinks and references (styling configured in theme.tex)
+\usepackage{hyperref}
+
+% Better tables
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{colortbl}  % For colored table rules
+
+% Better lists
+\usepackage{enumitem}
+
+% Units and measurements
+\usepackage{siunitx}
+
+% Double-struck fonts for probability/statistics (indicator functions, etc.)
+\usepackage{dsfont}
+
+% Better captions
+\usepackage{caption}
+\usepackage{subcaption}
+
+% Colored theorem boxes
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems}
+
+% Glossaries and acronyms (must load before hyperref)
+\usepackage[acronym,toc]{glossaries}
+
+% Code listings with syntax highlighting
+\usepackage{listings}
+
+% Algorithms and pseudocode
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+
+% Optional: Advanced syntax highlighting with minted (requires Python Pygments)
+% Uncomment the following lines to use minted instead of listings:
+% \usepackage{minted}
+% Note: Requires installing Pygments: pip install Pygments
+% Note: Compile with: pdflatex -shell-escape main.tex
+

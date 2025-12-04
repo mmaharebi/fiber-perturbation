@@ -1,0 +1,119 @@
+% 05_perturbation_theory.tex
+\section{First-Order Perturbation Theory}
+
+\subsection{Perturbed Refractive Index Profile}
+
+In this section, we derive the key formulas for computing how perturbations to the refractive index affect the propagation constant and effective index. We start by considering a small perturbation to the refractive index profile:
+\[
+n^2(r) \to n^2(r) + \Delta n^2(r),
+\]
+where the perturbation satisfies:
+\[
+|\Delta n^2(r)| \ll n^2(r) \quad \text{for all } r.
+\]
+
+This perturbation can arise from various physical mechanisms:
+\begin{itemize}
+  \item \textbf{Index diffusion:} Chemical diffusion of dopants near the core-cladding boundary
+  \item \textbf{Thermal effects:} Temperature-dependent changes in refractive index
+  \item \textbf{Stress-induced birefringence:} Residual stress from manufacturing
+  \item \textbf{Absorption losses:} Imaginary part of the refractive index (complex perturbation)
+\end{itemize}
+
+The corresponding perturbation to the Sturm--Liouville operator is:
+\[
+\Delta\mathcal{L} = k_0^2 \Delta n^2(r) \cdot \text{(multiplication operator)}.
+\]
+
+This perturbation modifies the operator such that:
+\[
+(\mathcal{L} + \Delta\mathcal{L})\Psi' = (\beta + \Delta\beta)^2 \Psi',
+\]
+where $\Psi'$ and $\beta + \Delta\beta$ are the perturbed eigenfunction and eigenvalue, respectively.
+
+\subsection{Eigenvalue Shift Formula}
+
+Using first-order perturbation theory for self-adjoint operators, the shift in the eigenvalue $\beta^2$ is:
+\[
+\Delta(\beta^2) = \langle \Psi | \Delta\mathcal{L} | \Psi \rangle = k_0^2 \int_0^\infty \Delta n^2(r) |\Psi(r)|^2 \, 2\pi r \, \dd{r},
+\]
+where $\Psi(r)$ is the \textit{unperturbed} normalized eigenfunction (mode profile) of the fundamental LP$_{01}$ mode.
+
+Since $\beta^2 = (k_0 n_{\text{eff}})^2$, we have:
+\[
+\Delta(\beta^2) = \Delta(k_0^2 n_{\text{eff}}^2) = k_0^2 \Delta(n_{\text{eff}}^2) = k_0^2 (n_{\text{eff}}^2 + \Delta n_{\text{eff}}^2 - n_{\text{eff}}^2).
+\]
+
+For small perturbations, $\Delta n_{\text{eff}} \ll n_{\text{eff}}$, so:
+\[
+\Delta(\beta^2) \approx k_0^2 \cdot 2n_{\text{eff}} \cdot \Delta n_{\text{eff}} = 2\beta \cdot \Delta\beta.
+\]
+
+Therefore:
+\[
+\Delta\beta = \frac{\Delta(\beta^2)}{2\beta} = \frac{k_0^2}{2\beta} \int_0^\infty \Delta n^2(r) |\Psi(r)|^2 \, 2\pi r \, \dd{r}.
+\]
+
+This is the \textbf{fundamental perturbation formula} that relates the shift in propagation constant to the index perturbation distribution and the mode profile.
+
+\subsection{Effective Index Variation}
+
+The shift in effective index is obtained by dividing the propagation constant shift by $k_0$:
+\[
+\Delta n_{\text{eff}} = \frac{\Delta\beta}{k_0} = \frac{k_0}{2\beta} \int_0^\infty \Delta n^2(r) |\Psi(r)|^2 \, 2\pi r \, \dd{r}.
+\]
+
+Since $\beta = k_0 n_{\text{eff}}$:
+\[
+\Delta n_{\text{eff}} = \frac{1}{2n_{\text{eff}}} \int_0^\infty \Delta n^2(r) |\Psi(r)|^2 \, 2\pi r \, \dd{r}.
+\]
+
+This formula shows that $\Delta n_{\text{eff}}$ is:
+\begin{itemize}
+  \item \textbf{Proportional to the perturbation:} The shift scales linearly with $\Delta n^2(r)$, ensuring validity only for small perturbations ($|\Delta n^2| \ll n^2$)
+  \item \textbf{Weighted by the mode profile:} Perturbations are weighted by $|\Psi(r)|^2$, the intensity of the guided mode. Most of the power is concentrated in the core, so core perturbations have the largest effect
+  \item \textbf{Inversely proportional to $n_{\text{eff}}$:} Fibers with smaller effective indices are more sensitive to perturbations
+\end{itemize}
+
+A more compact form using the modal power is often used. If we normalize the mode such that:
+\[
+P = \int_0^\infty |\Psi(r)|^2 \, 2\pi r \, \dd{r} = 1,
+\]
+then:
+\[
+\Delta n_{\text{eff}} = \frac{1}{2n_{\text{eff}}} \int_0^\infty \Delta n^2(r) |\Psi(r)|^2 \, 2\pi r \, \dd{r}.
+\]
+
+Alternatively, some texts work with unnormalized modes and explicit power denominators:
+\[
+\Delta n_{\text{eff}} = \frac{\int_0^\infty \Delta n^2(r) |\Psi(r)|^2 \, 2\pi r \, \dd{r}}{2n_{\text{eff}} \int_0^\infty |\Psi(r)|^2 \, 2\pi r \, \dd{r}}.
+\]
+
+\subsection{Power Normalization}
+
+In optical fiber theory, two normalization conventions are commonly used:
+
+\subsubsection*{Convention 1: Field Normalization}
+
+The transverse field profile is normalized such that the total power flowing in the $\pm z$ direction is unity:
+\[
+P_z = \frac{1}{2\eta_0} \int_0^\infty \int_0^{2\pi} |\Psi(r)|^2 \dd{\phi} r \, \dd{r} = 1,
+\]
+where $\eta_0 = \sqrt{\mu_0/\epsilon_0} \approx 377 \, \Omega$ is the impedance of free space. This leads to:
+\[
+\int_0^\infty |\Psi(r)|^2 \, 2\pi r \, \dd{r} = 2\eta_0.
+\]
+
+\subsubsection*{Convention 2: Unit Power Normalization}
+
+For simplicity in modal calculations, the field is scaled such that:
+\[
+\int_0^\infty |\Psi(r)|^2 \, 2\pi r \, \dd{r} = 1.
+\]
+
+This is the convention used in this work. With unit normalization, the perturbation formula simplifies to:
+\[
+\Delta n_{\text{eff}} = \frac{1}{2n_{\text{eff}}} \int_0^\infty \Delta n^2(r) |\Psi(r)|^2 \, 2\pi r \, \dd{r}.
+\]
+
+The choice of normalization affects the magnitude of $\Psi(r)$ but not the normalized integral $\int |\Psi|^2 / P_z$, so final results for $\Delta n_{\text{eff}}$ are independent of convention.

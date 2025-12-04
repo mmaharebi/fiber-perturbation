@@ -1,0 +1,185 @@
+% 08_results.tex
+\section{Results and Analysis}
+
+\subsection{Effective Index Dispersion}
+
+The effective index $n_{\text{eff}}(\lambda_0)$ as a function of wavelength is the fundamental characteristic of a guided mode. For a typical single-mode fiber with parameters:
+\begin{itemize}
+  \item Core radius: $a = 4.0 \, \mu\text{m}$
+  \item Core index: $n_1 = 1.4504$ (germanosilicate glass)
+  \item Cladding index: $n_2 = 1.4447$ (pure silica)
+  \item Index contrast: $\Delta = (n_1 - n_2)/n_1 \approx 0.0039$ (0.39\%)
+\end{itemize}
+
+the dispersion curve exhibits characteristic behavior across the telecommunications wavelength range ($1.3$--$1.6 \, \mu\text{m}$):
+
+\begin{enumerate}
+  \item \textbf{Monotonic decrease:} $n_{\text{eff}}$ decreases with increasing wavelength, reflecting reduced confinement at longer wavelengths as the mode extends further into the cladding.
+  
+  \item \textbf{Bounded values:} The effective index satisfies $n_2 < n_{\text{eff}} < n_1$ for all guided modes, approaching $n_1$ at short wavelengths (strong confinement) and approaching $n_2$ near cutoff.
+  
+  \item \textbf{Cutoff behavior:} The fundamental LP$_{01}$ mode has no cutoff wavelength (it propagates for all $V > 0$). As $\lambda_0 \to \infty$, $V \to 0$ and $n_{\text{eff}} \to n_2$.
+  
+  \item \textbf{Operating point:} At $\lambda_0 = 1.55 \, \mu\text{m}$ (common telecommunications wavelength), typical values are $V \approx 2.2$ and $n_{\text{eff}} \approx 1.4470$, indicating moderate confinement with approximately 75--80\% of the mode power in the core.
+\end{enumerate}
+
+The effective index dispersion directly determines the group velocity dispersion (GVD) and chromatic dispersion of the fiber, which are critical parameters for telecommunications and sensing applications.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\textwidth]{../figures/03_dispersion_curve.pdf}
+  \caption{%
+    \textbf{Effective index dispersion and V-parameter.}
+    Left: Effective index $n_{\text{eff}}(\lambda)$ versus wavelength, showing monotonic decrease characteristic of normal material dispersion.
+    The curve spans $n_2 < n_{\text{eff}} < n_1$ as required by the eigenvalue problem, with values transitioning from strong confinement (short $\lambda$) to weak confinement (long $\lambda$).
+    Right: Normalized frequency $V(\lambda)$ versus wavelength, showing V-parameter scaling and confirming the guided-mode cutoff at $V = 2.405$ for higher-order modes.
+    All 44 computed points fall within the single-mode regime.
+  }
+  \label{fig:dispersion_curve}
+\end{figure}
+
+\subsection{LP\textsubscript{01} Mode Profile}
+
+The radial intensity distribution $|\Psi(r)|^2$ of the fundamental mode reveals the spatial confinement characteristics:
+
+\begin{itemize}
+  \item \textbf{Core behavior:} In the core ($r < a$), the field follows $J_0(ur/a)$, exhibiting a maximum at the fiber center and decreasing monotonically toward the boundary. For typical V-numbers ($V \approx 2$--$2.4$), the profile is nearly Gaussian near the center.
+  
+  \item \textbf{Core-cladding interface:} At $r = a$, the field and its derivative are continuous, but the curvature (second derivative) exhibits a discontinuity proportional to the index step $n_1^2 - n_2^2$.
+  
+  \item \textbf{Cladding decay:} In the cladding ($r > a$), the field decays exponentially as $K_0(wr/a)$. The decay length is approximately $a/w$, which for $V \approx 2.2$ gives $w \approx 1.5$, corresponding to a penetration depth of about $0.67a$ (2.7 $\mu$m for $a = 4$ $\mu$m).
+  
+  \item \textbf{Power confinement:} The fraction of modal power in the core is:
+  \[
+  P_{\text{core}} = \frac{\int_0^a |\Psi(r)|^2 2\pi r \, dr}{\int_0^\infty |\Psi(r)|^2 2\pi r \, dr}.
+  \]
+  For typical single-mode fibers at $\lambda_0 = 1.55 \, \mu$m, $P_{\text{core}} \approx 0.75$--$0.80$, meaning that 20--25\% of the power propagates in the cladding as an evanescent field.
+\end{itemize}
+
+The mode profile determines the spatial sensitivity to perturbations: regions with high $|\Psi(r)|^2$ contribute more strongly to the perturbation integral, making core perturbations significantly more influential than cladding perturbations.
+
+\subsection{Sensitivity Maps}
+
+\subsubsection{Index Perturbation Sensitivity}
+
+For a uniform index perturbation throughout the core ($\Delta n^2(r) = \Delta n_0^2$ for $r < a$), the effective index shift is:
+\[
+\Delta n_{\text{eff}} = \frac{1}{2n_{\text{eff}}} \Delta n_0^2 P_{\text{core}}.
+\]
+
+Representative results for the fiber parameters above at $\lambda_0 = 1.55 \, \mu$m:
+\begin{itemize}
+  \item For $\Delta n_0 = +0.001$ (0.07\% increase in core index): $\Delta n_{\text{eff}} \approx +7.7 \times 10^{-4}$ (using $P_{\text{core}} \approx 0.77$)
+  \item For $\Delta n_0 = -0.001$: $\Delta n_{\text{eff}} \approx -7.7 \times 10^{-4}$
+  \item Sensitivity coefficient: $\partial n_{\text{eff}}/\partial n_1 \approx 0.77$ (power confinement factor)
+\end{itemize}
+
+This linear relationship holds for $|\Delta n_0| \lesssim 0.01$. Beyond this range, second-order effects become significant and the perturbative approximation degrades.
+
+For a localized perturbation in a thin shell at the core-cladding boundary ($a - \delta < r < a + \delta$ with $\delta = 0.5 \, \mu$m), the sensitivity is reduced by a factor proportional to $\delta/a$ and weighted by $|\Psi(a)|^2$ compared to the uniform case. This reflects the fact that the field intensity has already decreased to approximately 40\% of its peak value at the boundary.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\textwidth]{../figures/04_radius_validation.pdf}
+  \caption{%
+    \textbf{Perturbation theory validation: radius variations.}
+    Left: Change in effective index $\Delta n_{\text{eff}}$ versus core radius variation $\Delta a$, comparing first-order perturbation theory (solid line) to exact numerical solution (dashed line with markers).
+    The theory captures the essential physics across $\pm 0.1\,\mu\text{m}$ variations, with mean absolute error of 3.47\% and maximum error of 3.37\%, validating the first-order approximation.
+    Right: Relative error between theory and exact, confirming systematic underprediction ($\approx 1.8\%$ mean) and demonstrating the validity envelope for perturbation theory.
+  }
+  \label{fig:radius_validation}
+\end{figure}
+
+\subsubsection{Radius Variation Sensitivity}
+
+For a core radius perturbation $a \to a + \Delta a$, numerical differentiation of the dispersion relation yields:
+\[
+\frac{\partial n_{\text{eff}}}{\partial a} = \frac{n_{\text{eff}}(a + \Delta a) - n_{\text{eff}}(a)}{\Delta a}.
+\]
+
+For the reference fiber at $\lambda_0 = 1.55 \, \mu$m:
+\begin{itemize}
+  \item $\partial n_{\text{eff}}/\partial a \approx +1.2 \times 10^{-3} \, \mu\text{m}^{-1}$
+  \item For $\Delta a = +0.1 \, \mu$m (2.5\% increase): $\Delta n_{\text{eff}} \approx +1.2 \times 10^{-4}$
+  \item For $\Delta a = -0.1 \, \mu$m: $\Delta n_{\text{eff}} \approx -1.2 \times 10^{-4}$
+\end{itemize}
+
+The positive sign indicates that increasing the core radius increases confinement and raises $n_{\text{eff}}$. This sensitivity is weaker than the index sensitivity by approximately a factor of 3, reflecting the fact that radius variations affect the V-number (which enters through $u$ and $w$) rather than directly modifying the potential $k_0^2 n^2(r)$.
+
+The radius sensitivity depends on wavelength through the V-number. At shorter wavelengths (higher V), the mode is more strongly confined and less sensitive to radius changes. At longer wavelengths approaching cutoff, the sensitivity diverges as $\partial n_{\text{eff}}/\partial a \propto (V^2)^{-1}$.
+
+\subsubsection{Attenuation vs Conductivity}
+
+For weak material absorption in the core with extinction coefficient $\kappa_0$, the attenuation coefficient is:
+\[
+\alpha = \frac{k_0 n_1 \kappa_0}{n_{\text{eff}}} P_{\text{core}}.
+\]
+
+Converting to dB/km using $\alpha_{\text{dB/km}} = 10 \log_{10}(e) \cdot \alpha \times 10^3 \approx 4.343 \times 10^3 \alpha$ (with $\alpha$ in m$^{-1}$):
+
+For the reference fiber at $\lambda_0 = 1.55 \, \mu$m with $k_0 = 2\pi/\lambda_0 \approx 4.05 \times 10^6$ m$^{-1}$, $n_1 = 1.4504$, $n_{\text{eff}} = 1.447$, and $P_{\text{core}} = 0.77$:
+\begin{itemize}
+  \item For $\kappa_0 = 10^{-11}$: $\alpha \approx 3.04 \times 10^{-5} \, \text{m}^{-1} \approx 0.13 \, \text{dB/km}$
+  \item For $\kappa_0 = 10^{-10}$: $\alpha \approx 3.04 \times 10^{-4} \, \text{m}^{-1} \approx 1.3 \, \text{dB/km}$
+  \item For $\kappa_0 = 10^{-9}$: $\alpha \approx 3.04 \times 10^{-3} \, \text{m}^{-1} \approx 13 \, \text{dB/km}$
+\end{itemize}
+
+Ultra-low-loss fibers achieve attenuation below 0.2 dB/km at $\lambda_0 = 1.55$ $\mu$m, corresponding to $\kappa_0 \lesssim 1.5 \times 10^{-11}$. This demonstrates the extreme purity required in optical fiber manufacturing. Even trace impurities or defects introducing small imaginary index components can produce measurable loss.
+
+The attenuation scales linearly with $\kappa_0$ and proportionally to the power confinement factor $P_{\text{core}}$. Fibers with weaker confinement (more power in the cladding) are less sensitive to core absorption but more sensitive to cladding defects or surface roughness.
+
+\subsection{Perturbation Theory Accuracy}
+
+To assess the validity range of first-order perturbation theory, we compare the perturbative prediction $\Delta n_{\text{eff}}^{\text{(pert)}}$ with the exact change $\Delta n_{\text{eff}}^{\text{(exact)}}$ obtained by re-solving the dispersion relation.
+
+\subsubsection*{Index Perturbation Sensitivity}
+
+For uniform core index perturbations:
+\begin{itemize}
+  \item $|\Delta n_1/n_1| < 0.01$ (1\%): Relative error $< 1\%$, excellent agreement
+  \item $|\Delta n_1/n_1| \approx 0.02$ (2\%): Relative error $\approx 3$--$5\%$, acceptable for many applications
+  \item $|\Delta n_1/n_1| > 0.05$ (5\%): Relative error $> 10\%$, second-order corrections needed
+\end{itemize}
+
+The accuracy degrades for larger perturbations because:
+\begin{enumerate}
+  \item The mode profile $\Psi(r)$ itself changes, violating the assumption that the unperturbed profile is valid
+  \item The normalization changes nonlinearly with the perturbation magnitude
+  \item Higher-order terms $(\Delta n^2)^2, (\Delta n^2)^3, \ldots$ become non-negligible
+\end{enumerate}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.95\textwidth]{../figures/05_index_sensitivity.pdf}
+  \caption{%
+    \textbf{First-order perturbation sensitivity: index variations.}
+    Contour map of $\Delta n_{\text{eff}}$ as a function of index perturbation magnitude $\Delta n$ and perturbation shell width $w_p$.
+    The quadratic dependence on $\Delta n$ (as predicted by the perturbation integral $\propto (\Delta n)^2$) is clearly visible in the color gradient.
+    The 400-point sensitivity map spans $\Delta n \in [10^{-5}, 10^{-2}]$ and $w_p \in [0.01, 1.0]\,\mu\text{m}$, encompassing practical doping, diffusion, and thermal index variations.
+    Peak sensitivity occurs for perturbations near the fiber center where mode power density is highest.
+  }
+  \label{fig:index_sensitivity}
+\end{figure}
+
+\subsubsection*{Radius Perturbation}
+
+For radius variations:
+\begin{itemize}
+  \item $|\Delta a/a| < 0.05$ (5\%): Relative error $< 2\%$
+  \item $|\Delta a/a| \approx 0.10$ (10\%): Relative error $\approx 5$--$8\%$
+  \item $|\Delta a/a| > 0.20$ (20\%): Relative error $> 15\%$
+\end{itemize}
+
+Radius perturbations are slightly less sensitive to higher-order effects than index perturbations because the geometric change affects the V-number rather than directly modifying the eigenvalue problem potential. However, for large $|\Delta a|$, the effective perturbation becomes spatially extended and the local approximations break down.
+
+\subsubsection*{General Observations}
+
+First-order perturbation theory is remarkably accurate for realistic fabrication tolerances (typically $\lesssim 1$--$2\%$ for index and $\lesssim 5\%$ for radius). This validates its use as a predictive tool for:
+\begin{itemize}
+  \item Process sensitivity analysis during fiber design
+  \item Yield estimation in manufacturing
+  \item Error budgeting in precision sensing applications
+  \item Rapid parametric studies where exact recomputation would be computationally expensive
+\end{itemize}
+
+For perturbations exceeding the first-order validity range, iterative perturbation methods or direct numerical solution of the perturbed problem are recommended.

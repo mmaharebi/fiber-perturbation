@@ -1,0 +1,124 @@
+% 01_introduction.tex
+\section{Introduction}
+
+\subsection{Overview}
+
+Optical fibers are the backbone of modern telecommunications and integrated photonics systems. The performance of these waveguides is critically dependent on their geometric and material properties, which are subject to fabrication tolerances. Understanding how small deviations from ideal design parameters affect the propagation characteristics is essential for optimizing manufacturing processes, predicting system performance, and designing robust photonic devices.
+
+This work presents a mathematically rigorous analysis of \textbf{guided modes in step-index optical fibers} and their sensitivity to small fabrication-related perturbations. We focus on the fundamental LP$_{01}$ mode and investigate how variations in refractive index, core radius, and material absorption affect the propagation constant $\beta$ and effective index $n_{\text{eff}} = \beta/k_0$.
+
+The analysis combines several mathematical and computational techniques:
+\begin{itemize}
+  \item \textbf{Analytical eigenmode theory} for step-index fibers based on Bessel function solutions
+  \item \textbf{Sturm--Liouville operator formulation} providing rigorous theoretical foundations
+  \item \textbf{First-order perturbation theory} for eigenvalue sensitivity analysis
+  \item \textbf{Numerical methods} including root-finding algorithms and quadrature integration
+\end{itemize}
+
+The perturbation scenarios investigated include:
+\begin{enumerate}
+  \item \textbf{Localized refractive index variations} near the core-cladding boundary, modeling dopant diffusion or chemical processes
+  \item \textbf{Core radius deviations} arising from etching or deposition tolerances
+  \item \textbf{Weak material absorption} representing losses due to impurities or intentional doping
+\end{enumerate}
+
+For each perturbation type, we derive analytical expressions using first-order perturbation theory and validate them against exact numerical solutions. This approach reveals both the accuracy and limitations of perturbative methods for practical parameter ranges.
+
+\subsection{Scope and Objectives}
+
+The primary objectives of this study are:
+
+\begin{enumerate}
+  \item \textbf{Establish rigorous mathematical foundations:} Formulate the fiber mode problem as a Sturm--Liouville eigenvalue problem, demonstrating self-adjointness and orthogonality properties that justify perturbation theory.
+  
+  \item \textbf{Derive perturbation formulas:} Obtain explicit expressions for eigenvalue shifts $\Delta\beta$ and effective index variations $\Delta n_{\text{eff}}$ in terms of material and geometric perturbations.
+  
+  \item \textbf{Implement numerical solutions:} Develop computational tools to solve the dispersion relation, normalize mode profiles, and evaluate perturbation integrals.
+  
+  \item \textbf{Validate perturbation theory:} Compare first-order analytical predictions with exact numerical recomputation to assess accuracy and identify validity ranges.
+  
+  \item \textbf{Quantify fabrication sensitivities:} Generate sensitivity maps showing how $n_{\text{eff}}$ responds to realistic fabrication errors in index, radius, and loss.
+\end{enumerate}
+
+This framework is directly applicable to:
+\begin{itemize}
+  \item \textbf{Optical fiber sensing} where small environmental perturbations must be detected
+  \item \textbf{Integrated photonics} where process variations affect waveguide performance
+  \item \textbf{High-precision interferometry} requiring accurate phase modeling
+  \item \textbf{Modal dispersion engineering} in specialty fibers
+  \item \textbf{Microwave dielectric waveguides} which are mathematically analogous
+\end{itemize}
+
+The methodology generalizes to graded-index fibers, planar waveguides, and other weakly guiding structures, making it a versatile tool for photonic design and analysis.
+
+\subsection{Mathematical Framework}
+
+The mathematical approach employed in this work rests on three pillars: eigenmode analysis, operator theory, and perturbation methods.
+
+\subsubsection*{Eigenmode Analysis}
+
+Under the weakly guiding approximation ($n_1 \approx n_2$), the propagating modes of a step-index fiber can be described by the scalar Helmholtz equation for the transverse electric field envelope $\Psi(r)$:
+\[
+\left[
+\frac{1}{r}\dv{r}\left( r\dv{\Psi}{r} \right)
++ \left( k_0^2 n^2(r) - \beta^2 \right)
+- \frac{m^2}{r^2}
+\right] \Psi(r) = 0,
+\]
+where $k_0 = 2\pi/\lambda_0$ is the free-space wavenumber, $n(r)$ is the radial refractive index profile, $\beta$ is the propagation constant, and $m$ is the azimuthal mode number.
+
+For the fundamental LP$_{01}$ mode ($m = 0$), solutions are Bessel functions in the core and modified Bessel functions in the cladding. The eigenvalue $\beta$ is determined by enforcing continuity of the field and its derivative at the core-cladding interface, yielding a transcendental dispersion relation.
+
+\subsubsection*{Sturm--Liouville Formulation}
+
+The radial wave equation can be cast as a Sturm--Liouville eigenvalue problem:
+\[
+\mathcal{L}\Psi
+=
+-\frac{1}{r}\dv{r}\left(r\dv{\Psi}{r}\right)
++ \left[ \frac{m^2}{r^2} + k_0^2 n^2(r) \right] \Psi
+= \beta^2 \Psi,
+\]
+where $\mathcal{L}$ is a self-adjoint differential operator on the domain $r \in (0, \infty)$ with appropriate boundary conditions (regularity at the origin and exponential decay at infinity).
+
+Self-adjointness guarantees:
+\begin{itemize}
+  \item Real eigenvalues $\beta^2$ for guided modes
+  \item Orthogonality of eigenfunctions with respect to the weighted inner product
+  \item Validity of first-order perturbation theory for small changes in the potential $k_0^2 n^2(r)$
+\end{itemize}
+
+This operator-theoretic perspective is essential for rigorously justifying the perturbation formulas and is rarely emphasized in applied photonics texts.
+
+\subsubsection*{First-Order Perturbation Theory}
+
+Consider a small perturbation to the refractive index profile:
+\[
+n^2(r) \to n^2(r) + \Delta n^2(r), \quad |\Delta n^2| \ll n^2.
+\]
+
+First-order perturbation theory for the Sturm--Liouville operator yields the eigenvalue shift:
+\[
+\Delta\beta = -\frac{k_0^2}{2\beta} \int_0^\infty \Delta n^2(r) \, |\Psi(r)|^2 \, 2\pi r \, \dd{r},
+\]
+where $\Psi(r)$ is the normalized unperturbed eigenfunction.
+
+The corresponding shift in effective index is:
+\[
+\Delta n_{\text{eff}} = \frac{\Delta\beta}{k_0} = -\frac{k_0}{2\beta} \int_0^\infty \Delta n^2(r) \, |\Psi(r)|^2 \, 2\pi r \, \dd{r}.
+\]
+
+This formula is the central tool for computing sensitivity to index perturbations, radius variations (via equivalent index changes), and complex permittivity modifications (for loss calculations).
+
+\subsubsection*{Numerical Implementation}
+
+The computational workflow consists of:
+\begin{enumerate}
+  \item Solving the unperturbed dispersion relation using bracketing and Brent's root-finding method
+  \item Normalizing the mode profile $\Psi(r)$ to unit power
+  \item Evaluating the perturbation integral numerically using adaptive quadrature
+  \item Computing $\Delta\beta$ from the perturbation formula
+  \item Validating against exact solutions obtained by re-solving the dispersion equation with modified parameters
+\end{enumerate}
+
+This combined analytical-numerical approach provides both physical insight and quantitative predictions for realistic fabrication scenarios.

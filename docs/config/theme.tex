@@ -1,0 +1,311 @@
+% theme.tex
+% Comprehensive visual design system for the template
+% Defines colors, typography, spacing, and all visual styling
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COLOR PALETTE - Academic Professional Theme
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Primary Colors (for main content)
+\definecolor{primary-dark}{RGB}{25, 42, 86}        % Deep Navy - headings
+\definecolor{primary-main}{RGB}{41, 98, 255}       % Royal Blue - links, accents
+\definecolor{primary-light}{RGB}{100, 149, 237}    % Cornflower Blue - lighter accents
+
+% Secondary Colors (for supporting elements)
+\definecolor{secondary-dark}{RGB}{0, 77, 64}       % Teal Dark
+\definecolor{secondary-main}{RGB}{0, 150, 136}     % Teal
+\definecolor{secondary-light}{RGB}{77, 182, 172}   % Teal Light
+
+% Semantic Colors (for theorem boxes and special elements)
+\definecolor{theorem-blue}{RGB}{25, 118, 210}      % Blue for theorems
+\definecolor{definition-teal}{RGB}{0, 137, 123}    % Teal for definitions
+\definecolor{example-slate}{RGB}{84, 110, 122}     % Slate for examples
+\definecolor{remark-purple}{RGB}{123, 31, 162}     % Purple for remarks
+\definecolor{question-amber}{RGB}{255, 143, 0}     % Amber for questions
+\definecolor{success-green}{RGB}{56, 142, 60}      % Green for solutions
+\definecolor{warning-red}{RGB}{211, 47, 47}        % Red for warnings
+\definecolor{important-orange}{RGB}{245, 124, 0}   % Orange for important
+
+% Neutral Colors (for text and backgrounds)
+\definecolor{text-primary}{RGB}{33, 33, 33}        % Almost black
+\definecolor{text-secondary}{RGB}{117, 117, 117}   % Gray
+\definecolor{bg-paper}{RGB}{255, 255, 255}         % White
+\definecolor{bg-light}{RGB}{250, 250, 250}         % Off-white
+\definecolor{divider}{RGB}{224, 224, 224}          % Light gray
+
+% Physics/Math specific colors (retain from original)
+\definecolor{vectorcolor}{RGB}{0, 102, 204}
+\definecolor{forcecolor}{RGB}{204, 0, 0}
+\definecolor{momentcolor}{RGB}{0, 153, 0}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TYPOGRAPHY SETTINGS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Modern font selections (requires packages)
+\usepackage{lmodern}           % Latin Modern - improved Computer Modern
+\usepackage[T1]{fontenc}       % Better font encoding
+
+% Optional: Professional serif fonts (uncomment ONE to use)
+% \usepackage{tgtermes}         % Times-like font
+% \usepackage{tgpagella}        % Palatino-like font
+% \usepackage{libertine}        % Linux Libertine
+
+% Sans-serif for headings (optional, uncomment to enable)
+% \usepackage[sfdefault]{FiraSans}  % Modern sans-serif
+% \renewcommand{\familydefault}{\sfdefault}  % Use sans everywhere
+
+% Section heading styles
+\usepackage{titlesec}
+
+% Part styling (if used)
+\titleformat{\part}[display]
+  {\normalfont\Huge\bfseries\color{primary-dark}}
+  {\partname\ \thepart}
+  {20pt}
+  {\Huge}
+
+% Section styling
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{primary-dark}}
+  {\thesection}
+  {1em}
+  {}
+  [\vspace{2pt}{\titlerule[0.8pt]}]
+
+% Subsection styling
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{primary-main}}
+  {\thesubsection}
+  {1em}
+  {}
+
+% Subsubsection styling
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\color{secondary-main}}
+  {\thesubsubsection}
+  {1em}
+  {}
+
+% Spacing before/after sections
+\titlespacing*{\section}{0pt}{3.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}
+\titlespacing*{\subsection}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\titlespacing*{\subsubsection}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PARAGRAPH AND TEXT FORMATTING
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Paragraph spacing
+\setlength{\parindent}{0pt}           % No paragraph indentation
+\setlength{\parskip}{0.8em}           % Space between paragraphs
+
+% Line spacing
+\usepackage{setspace}
+\setstretch{1.15}                     % Slightly increased line spacing
+
+% Better microtypography (optional but recommended)
+\usepackage{microtype}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HYPERLINK STYLING
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primary-main,           % Internal links
+    urlcolor=primary-main,            % URLs
+    citecolor=secondary-main,         % Citations
+    filecolor=primary-main,           % File links
+    bookmarksnumbered=true,
+    pdfstartview=FitH,
+    breaklinks=true,
+    % Remove link borders
+    pdfborder={0 0 0}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TABLE OF CONTENTS STYLING
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{tocloft}
+
+% Section entries in TOC
+\renewcommand{\cftsecfont}{\bfseries\color{primary-dark}}
+\renewcommand{\cftsecpagefont}{\bfseries\color{primary-dark}}
+
+% Subsection entries in TOC
+\renewcommand{\cftsubsecfont}{\color{text-primary}}
+\renewcommand{\cftsubsecpagefont}{\color{text-secondary}}
+
+% Dots style
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TITLE PAGE STYLING
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Custom title formatting
+\usepackage{titling}
+
+% Adjust title spacing
+\setlength{\droptitle}{-4em}
+
+% Title, author, date colors
+\pretitle{\begin{center}\LARGE\bfseries\color{primary-dark}}
+\posttitle{\par\end{center}\vskip 0.5em}
+
+\preauthor{\begin{center}\large\color{text-primary}}
+\postauthor{\end{center}}
+
+\predate{\begin{center}\large\color{text-secondary}}
+\postdate{\par\end{center}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ABSTRACT STYLING
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{abstract}
+
+% Abstract title
+\renewcommand{\abstractnamefont}{\normalfont\large\bfseries\color{primary-dark}}
+
+% Abstract text
+\renewcommand{\abstracttextfont}{\normalfont\small\color{text-primary}}
+
+% Add frame around abstract
+\setlength{\absleftindent}{1.5cm}
+\setlength{\absrightindent}{1.5cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LIST STYLING
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlist[itemize,1]{
+  label={\color{primary-main}$\bullet$},
+  leftmargin=*,
+  itemsep=0.3em,
+  parsep=0em
+}
+
+\setlist[itemize,2]{
+  label={\color{secondary-main}$\circ$},
+  leftmargin=*,
+  itemsep=0.2em
+}
+
+\setlist[enumerate,1]{
+  label={\color{primary-main}\arabic*.},
+  leftmargin=*,
+  itemsep=0.3em,
+  parsep=0em
+}
+
+\setlist[enumerate,2]{
+  label={\color{secondary-main}\alph*)},
+  leftmargin=*,
+  itemsep=0.2em
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CAPTION STYLING
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\captionsetup{
+  labelfont={bf,color=primary-dark},
+  textfont={color=text-primary},
+  labelsep=period,
+  justification=justified,
+  font=small,
+  skip=8pt
+}
+
+\captionsetup[sub]{
+  labelfont={bf,color=secondary-main},
+  textfont={color=text-secondary},
+  font=footnotesize
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TABLE STYLING
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Colored table rules using booktabs
+\arrayrulecolor{divider}
+
+% Better spacing in tables
+\renewcommand{\arraystretch}{1.3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CODE LISTINGS STYLING
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstset{
+    basicstyle=\ttfamily\small\color{text-primary},
+    commentstyle=\color{text-secondary}\itshape,
+    keywordstyle=\color{primary-main}\bfseries,
+    stringstyle=\color{success-green},
+    numberstyle=\tiny\color{text-secondary},
+    breaklines=true,
+    frame=single,
+    rulecolor=\color{divider},
+    backgroundcolor=\color{bg-light},
+    numbers=left,
+    numbersep=8pt,
+    tabsize=4,
+    showstringspaces=false,
+    captionpos=b
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FOOTNOTE STYLING
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Footnote color
+\renewcommand{\footnoterule}{%
+  \kern -3pt
+  {\color{divider}\hrule width 0.4\columnwidth height 0.4pt}
+  \kern 2.6pt
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PAGE HEADER/FOOTER (optional - uncomment to enable)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \usepackage{fancyhdr}
+% \pagestyle{fancy}
+% \fancyhf{}
+% \fancyhead[L]{\color{text-secondary}\small\leftmark}
+% \fancyhead[R]{\color{text-secondary}\small\thepage}
+% \renewcommand{\headrulewidth}{0.5pt}
+% \renewcommand{\headrule}{\hbox to\headwidth{\color{divider}\leaders\hrule height \headrulewidth\hfill}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% QUOTATION STYLING
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{csquotes}
+
+% Custom quote environment with styling
+\renewenvironment{quote}
+  {\list{}{\leftmargin=1.5cm\rightmargin=1.5cm}%
+   \item\relax\color{text-secondary}\itshape}
+  {\endlist}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ADDITIONAL VISUAL ELEMENTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Custom horizontal rule
+\newcommand{\customhrule}{%
+  \par\noindent
+  {\color{divider}\rule{\linewidth}{0.5pt}}
+  \par
+}
+
+% Highlighted text command
+\newcommand{\highlight}[1]{{\color{important-orange}\textbf{#1}}}
+
+% Subtle text command
+\newcommand{\subtle}[1]{{\color{text-secondary}\small #1}}
+

@@ -1,0 +1,108 @@
+% 04_sturm_liouville.tex
+\section{Sturm--Liouville Formulation}
+
+\subsection{Self-Adjoint Operator Structure}
+
+The radial wave equation governing LP modes can be recast as a Sturm--Liouville eigenvalue problem, providing a rigorous mathematical framework that justifies perturbation theory. Consider the radial Helmholtz equation:
+\[
+\frac{1}{r}\dv{r}\left( r\dv{\Psi}{r} \right)
++ \left( k_0^2 n^2(r) - \beta^2 - \frac{m^2}{r^2} \right) \Psi(r) = 0.
+\]
+
+Rearranging, we define the self-adjoint differential operator:
+\[
+\mathcal{L}\Psi
+\eqdef
+-\frac{1}{r}\dv{r}\left(r\dv{\Psi}{r}\right)
++ \left[ \frac{m^2}{r^2} + k_0^2 n^2(r) \right] \Psi,
+\]
+so that the eigenvalue problem becomes:
+\[
+\mathcal{L}\Psi = \beta^2 \Psi.
+\]
+
+The operator $\mathcal{L}$ acts on functions defined on the domain $\mathcal{D} = (0, \infty)$ with appropriate boundary conditions at both endpoints.
+
+A differential operator is self-adjoint if it satisfies:
+\[
+\int_0^\infty \left( \psi_1^* \mathcal{L}\psi_2 \right) 2\pi r \, \dd{r} = \int_0^\infty \left( (\mathcal{L}\psi_1)^* \psi_2 \right) 2\pi r \, \dd{r}
+\]
+for all admissible functions $\psi_1, \psi_2$ in the domain of $\mathcal{L}$. Equivalently, using Green's identity:
+\[
+\int_0^\infty \left( \psi_1^* \mathcal{L}\psi_2 - (\mathcal{L}\psi_1)^* \psi_2 \right) 2\pi r \, \dd{r} = \left[ 2\pi r \left( \psi_1^* \dv{\psi_2}{r} - \frac{\dd{\psi_1^*}}{\dd{r}} \psi_2 \right) \right]_0^\infty.
+\]
+
+For self-adjointness, the boundary term (at $r = 0$ and $r = \infty$) must vanish, which is guaranteed by the regularity and decay conditions imposed below.
+
+\subsection{Boundary Conditions for Guided Modes}
+
+For guided (bound) modes, we impose the following boundary conditions:
+
+\begin{enumerate}
+  \item \textbf{Regularity at the origin:} The solution must be regular (finite and smooth) at $r = 0$. For the fundamental mode ($m = 0$), this selects $J_0$ over $Y_0$ in the core region, since $Y_0$ diverges as $r \to 0$.
+  
+  \item \textbf{Exponential decay at infinity:} The solution must decay exponentially as $r \to \infty$ to ensure square integrability. In the cladding ($r > a$), this selects $K_0$ over $I_0$, since $K_0(wr/a) \to 0$ exponentially, while $I_0(wr/a) \to \infty$ exponentially.
+  
+  \item \textbf{Continuity at the interface:} The field and its derivative must be continuous at $r = a$, ensuring a valid boundary value problem.
+\end{enumerate}
+
+These conditions define the domain $\mathcal{D}$ of $\mathcal{L}$:
+\[
+\mathcal{D} = \left\{ \psi \in L^2(0, \infty) : \mathcal{L}\psi \in L^2(0, \infty), \text{ boundary conditions satisfied} \right\},
+\]
+where $L^2(0, \infty)$ denotes the Hilbert space of square-integrable functions with inner product:
+\[
+\langle \psi_1, \psi_2 \rangle = \int_0^\infty \psi_1^*(r) \psi_2(r) \, 2\pi r \, \dd{r}.
+\]
+
+\subsection{Orthogonality and Completeness}
+
+For a self-adjoint operator, the following properties hold:
+
+\begin{enumerate}
+  \item \textbf{Real eigenvalues:} All eigenvalues $\beta_i^2$ are real. This ensures that the propagation constants $\beta_i$ are real for guided modes (bound states) and complex for leaky modes (resonances).
+  
+  \item \textbf{Discrete spectrum:} The spectrum of $\mathcal{L}$ is discrete and bounded below. For step-index fibers, there is a finite number of guided modes with $\beta_i$ ranging from $k_0 n_2$ (fundamental mode) to $k_0 n_1$ (highest mode).
+  
+  \item \textbf{Orthogonality of eigenfunctions:} Eigenfunctions $\Psi_i(r)$ and $\Psi_j(r)$ corresponding to different eigenvalues $\beta_i^2 \neq \beta_j^2$ satisfy:
+  \[
+  \int_0^\infty \Psi_i^*(r) \Psi_j(r) \, 2\pi r \, \dd{r} = 0.
+  \]
+  
+  \item \textbf{Completeness:} The set of eigenfunctions forms a complete basis in $L^2(0, \infty)$. Any square-integrable function can be expanded as:
+  \[
+  f(r) = \sum_{i} c_i \Psi_i(r), \quad c_i = \frac{\langle \Psi_i, f \rangle}{\langle \Psi_i, \Psi_i \rangle}.
+  \]
+\end{enumerate}
+
+These properties are fundamental to perturbation theory and modal analysis.
+
+\subsection{Theoretical Foundation for Perturbation Analysis}
+
+The self-adjoint structure of $\mathcal{L}$ provides the rigorous foundation for first-order perturbation theory. When the potential $k_0^2 n^2(r)$ is perturbed:
+\[
+\mathcal{L} \to \mathcal{L} + \Delta\mathcal{L}, \quad \text{where} \quad \Delta\mathcal{L}\psi = k_0^2 \Delta n^2(r) \psi,
+\]
+with $|\Delta n^2| \ll n^2$, the eigenvalue shift is given by first-order perturbation theory:
+\[
+\Delta\beta^2_i = \langle \Psi_i | \Delta\mathcal{L} | \Psi_i \rangle = k_0^2 \int_0^\infty \Delta n^2(r) |\Psi_i(r)|^2 \, 2\pi r \, \dd{r}.
+\]
+
+Dividing by $2\beta$:
+\[
+\Delta\beta_i = \frac{k_0^2}{2\beta_i} \int_0^\infty \Delta n^2(r) |\Psi_i(r)|^2 \, 2\pi r \, \dd{r}.
+\]
+
+Key advantages of the Sturm--Liouville formulation:
+
+\begin{itemize}
+  \item \textbf{Mathematical rigor:} Self-adjointness guarantees real eigenvalues and orthogonal eigenfunctions, ensuring the validity of perturbation expansions.
+  
+  \item \textbf{Higher-order corrections:} The formulation naturally extends to second and higher orders. The second-order correction depends on the coupling to other modes through the perturbation.
+  
+  \item \textbf{Generalizability:} The framework applies to any potential $k_0^2 n^2(r)$, including graded-index fibers and other waveguide geometries.
+  
+  \item \textbf{Physical insight:} Orthogonality explains why perturbations to the core primarily affect the fundamental mode, while higher-order modes are less sensitive.
+\end{itemize}
+
+This operator-theoretic perspective, though rarely emphasized in applied photonics texts, is essential for understanding the limitations and accuracy of perturbation predictions.

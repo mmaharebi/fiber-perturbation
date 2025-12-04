@@ -1,0 +1,162 @@
+% 07_numerical_implementation.tex
+\section{Numerical Implementation}
+
+\subsection{Unperturbed Eigenvalue Problem}
+
+The computational workflow begins by solving the dispersion relation for the unperturbed fiber to obtain the propagation constant $\beta$ and mode profile $\Psi(r)$ for a given wavelength and fiber geometry. This is the foundation upon which all perturbation calculations are built.
+
+\subsubsection{Bessel Function Evaluation}
+
+The dispersion relation for the fundamental LP$_{01}$ mode is:
+\[
+\frac{J_0(u)}{u J_1(u)} = -\frac{K_0(w)}{w K_1(w)},
+\]
+where $u$ and $w$ are related by $u^2 + w^2 = V^2$. The V-number is computed from the fiber parameters:
+\[
+V = k_0 a \sqrt{n_1^2 - n_2^2} = \frac{2\pi a}{\lambda_0}\sqrt{n_1^2 - n_2^2}.
+\]
+
+Numerical evaluation of Bessel functions $J_0, J_1, K_0, K_1$ is performed using established library functions (e.g., SciPy's \texttt{scipy.special.jv, kv}). These implementations use efficient algorithms (continued fractions, backward recurrence, etc.) to ensure high accuracy across the full range of arguments required.
+
+\subsubsection{Root-Finding Algorithm}
+
+The dispersion relation cannot be solved in closed form, so numerical root-finding is required. Defining:
+\[
+f(u) = \frac{J_0(u)}{u J_1(u)} + \frac{K_0(\sqrt{V^2 - u^2})}{\sqrt{V^2 - u^2} \, K_1(\sqrt{V^2 - u^2})},
+\]
+we seek the root $u^*$ where $f(u^*) = 0$ in the valid range $0 < u < V$.
+
+The algorithm employed is **Brent's method**, which combines:
+\begin{itemize}
+  \item \textbf{Bracketing:} Initial bracket $[u_{\min}, u_{\max}]$ is established such that $f(u_{\min}) \cdot f(u_{\max}) < 0$, guaranteeing a root by the intermediate value theorem.
+  \item \textbf{Hybrid convergence:} Brent's method uses bisection, secant, and inverse quadratic interpolation to achieve superlinear convergence while maintaining robustness.
+  \item \textbf{Convergence tolerance:} Root-finding is performed to a relative tolerance of $\epsilon_u \sim 10^{-10}$ to ensure accurate $\beta$ values.
+\end{itemize}
+
+Once $u^*$ is found, $w^*$ is computed from:
+\[
+w^* = \sqrt{V^2 - (u^*)^2},
+\]
+and the propagation constant is:
+\[
+\beta = \frac{1}{a}\sqrt{(k_0 n_1)^2 - \frac{(u^*)^2}{a^2}} = \frac{1}{a}\sqrt{k_0^2 n_1^2 - \frac{(u^*)^2}{a^2}}.
+\]
+
+The effective index is then:
+\[
+n_{\text{eff}} = \frac{\beta}{k_0}.
+\]
+
+\subsection{Mode Normalization}
+
+The transverse mode profile in the core and cladding is:
+\[
+\Psi_{\text{core}}(r) = A J_0\left(\frac{u^* r}{a}\right), \quad r < a,
+\]
+\[
+\Psi_{\text{cladding}}(r) = C K_0\left(\frac{w^* r}{a}\right), \quad r > a,
+\]
+where the amplitudes $A$ and $C$ are related by continuity at $r = a$:
+\[
+\frac{\Psi_{\text{cladding}}(a)}{\Psi_{\text{core}}(a)} = \frac{C K_0(w^*)}{A J_0(u^*)} = 1.
+\]
+
+The unnormalized mode profile is set by choosing $A = 1$, giving $C = J_0(u^*)/K_0(w^*)$.
+
+To achieve unit power normalization, the normalization constant $N$ is computed:
+\[
+N = \sqrt{\int_0^\infty |\Psi_{\text{unnormalized}}(r)|^2 \, 2\pi r \, \dd{r}}.
+\]
+
+Expanding:
+\[
+N^2 = 2\pi \left[ \int_0^a J_0^2\left(\frac{u^* r}{a}\right) r \, \dd{r} + C^2 \int_a^\infty K_0^2\left(\frac{w^* r}{a}\right) r \, \dd{r} \right].
+\]
+
+Using the recurrence relations for Bessel functions:
+\[
+\int_0^a J_0^2\left(\frac{u^* r}{a}\right) r \, \dd{r} = \frac{a^2}{2} \left[ J_0^2(u^*) + J_1^2(u^*) - \frac{J_0^2(u^*)}{u^*} \right],
+\]
+\[
+\int_a^\infty K_0^2\left(\frac{w^* r}{a}\right) r \, \dd{r} = \frac{a^2}{2} \left[ K_0^2(w^*) + K_1^2(w^*) + \frac{K_0^2(w^*)}{w^*} \right],
+\]
+the normalization integral can be evaluated using Bessel function identities.
+
+The normalized mode profile is:
+\[
+\Psi_{\text{norm}}(r) = \frac{1}{N} \Psi_{\text{unnormalized}}(r).
+\]
+
+\subsection{Perturbation Integral Evaluation}
+
+With the normalized mode profile $\Psi_{\text{norm}}(r)$ in hand, the perturbation integral is evaluated:
+\[
+I = \int_0^\infty \Delta n^2(r) |\Psi_{\text{norm}}(r)|^2 \, 2\pi r \, \dd{r}.
+\]
+
+Depending on the perturbation type, the integral is split into core and cladding contributions and evaluated using appropriate quadrature:
+
+\begin{enumerate}
+  \item \textbf{Localized index perturbation:} If $\Delta n^2$ is confined to the region $[a - \delta, a + \delta]$ near the core-cladding boundary, the integral is:
+  \[
+  I = \Delta n_0^2 \int_{a-\delta}^{a+\delta} |\Psi_{\text{norm}}(r)|^2 \, 2\pi r \, \dd{r}.
+  \]
+  This can be evaluated using **adaptive Gaussian quadrature** (e.g., \texttt{scipy.integrate.quad}), which automatically subdivides the domain based on local function behavior.
+  
+  \item \textbf{Core perturbation:} If $\Delta n^2$ extends throughout the core:
+  \[
+  I = \int_0^a \Delta n^2(r) |\Psi_{\text{norm}}(r)|^2 \, 2\pi r \, \dd{r}.
+  \]
+  For uniform $\Delta n^2 = \Delta n_0^2$ in the core, this simplifies to:
+  \[
+  I = \Delta n_0^2 \int_0^a |\Psi_{\text{norm}}(r)|^2 \, 2\pi r \, \dd{r} = \Delta n_0^2 P_{\text{core}},
+  \]
+  where $P_{\text{core}}$ is the power confinement factor.
+  
+  \item \textbf{Complex perturbations (absorption):} For weak absorption with $\Delta n^2(r) = -2\imag n(r) \kappa(r)$:
+  \[
+  I = -2\imag \int_0^\infty n(r) \kappa(r) |\Psi_{\text{norm}}(r)|^2 \, 2\pi r \, \dd{r}.
+  \]
+  The integral of a complex function is computed by evaluating the real and imaginary parts separately.
+\end{enumerate}
+
+Quadrature is performed to a relative tolerance of $\epsilon_I \sim 10^{-10}$ to minimize integration errors relative to the perturbation effect.
+
+\subsection{Sensitivity Computation}
+
+Once the perturbation integral $I$ is evaluated, the shifts in propagation constant and effective index are computed using the first-order formulas:
+\[
+\Delta\beta = \frac{k_0^2}{2\beta} I = \frac{k_0}{2n_{\text{eff}}} I,
+\]
+\[
+\Delta n_{\text{eff}} = \frac{\Delta\beta}{k_0} = \frac{1}{2n_{\text{eff}}} I.
+\]
+
+For complex perturbations (absorption with $I = -2\imag J$ where $J$ is real):
+\[
+\Delta\tilde{\beta} = \frac{k_0}{2n_{\text{eff}}} \cdot (-2\imag J) = -\imag\frac{k_0 J}{n_{\text{eff}}},
+\]
+\[
+\Delta\beta_r = 0, \quad \Delta\alpha = \frac{k_0 J}{n_{\text{eff}}},
+\]
+where $\Delta\alpha > 0$ is the attenuation coefficient shift.
+
+\subsection{Validation Methodology}
+
+To verify the accuracy of first-order perturbation theory, the following comparison is performed for each perturbation scenario:
+
+\begin{enumerate}
+  \item \textbf{Compute perturbative prediction:} Use the formula $\Delta n_{\text{eff}}^{\text{(pert)}} = \frac{1}{2n_{\text{eff}}} I$ to predict the effective index shift.
+  
+  \item \textbf{Exact numerical recomputation:} Modify the fiber parameter (e.g., $n_1 \to n_1 + \Delta n_1$ or $a \to a + \Delta a$) according to the perturbation magnitude.
+  
+  \item \textbf{Solve exact dispersion relation:} Re-solve the dispersion relation for the perturbed fiber to obtain $n_{\text{eff}}^{\text{(exact)}}$.
+  
+  \item \textbf{Compute relative error:} Calculate the error metric:
+  \[
+  \epsilon_{\text{rel}} = \frac{|n_{\text{eff}}^{\text{(exact)}} - n_{\text{eff}}^{\text{(perturbed)}}|}{n_{\text{eff}}},
+  \]
+  where $n_{\text{eff}}^{\text{(perturbed)}} = n_{\text{eff}} + \Delta n_{\text{eff}}^{\text{(pert)}}$.
+\end{enumerate}
+
+This procedure is repeated for multiple perturbation magnitudes to establish the validity range of first-order theory. Typically, the perturbative prediction remains accurate (relative error $< 1\%$) for $|\Delta n^2| / n^2 \lesssim 0.01$, demonstrating the practical utility of the approach for small fabrication variations.
