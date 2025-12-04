@@ -184,7 +184,7 @@ Feel free to explore the code, run the tests, or reach out if you have questions
 
 ## About Me
 
-I'm Mahdy Mahareb, an ECE student at the University of Kassel (Germany), currently preparing applications for funded master's programs in photonics, computational electromagnetics, and related fields. This project represents my independent work in numerical electromagnetics and demonstrates my readiness for graduate-level research.
+I'm Mahdy Mahareb, currently preparing applications for funded master's programs in photonics and computational electromagnetics at the University of Kassel, Germany. This project represents my independent work in numerical electromagnetics and demonstrates readiness for graduate-level research.
 
 **Contact:** contact@mahdymahareb.de  
 **Website:** https://mahdymahareb.de  

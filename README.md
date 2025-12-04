@@ -303,7 +303,7 @@ This project showcases technical competencies relevant to computational photonic
 
 ## 👤 About This Project
 
-This project was developed by Mahdy Mahareb, an ECE student at the University of Kassel (Germany), as a portfolio demonstration of independent work in computational electromagnetics and photonic device design.
+This project was developed by Mahdy Mahareb as a portfolio demonstration of independent work in computational electromagnetics and photonic device design. Currently preparing applications for funded master's programs in photonics and computational electromagnetics at the University of Kassel, Germany.
 
 **Contact:** contact@mahdymahareb.de | **Website:** https://mahdymahareb.de | **GitHub:** https://github.com/mmaharebi
 
